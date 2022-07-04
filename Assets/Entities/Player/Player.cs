@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Creature {
+public class Player : Creature {
 
   public float moveSpeed = 0.5f;
   public ContactFilter2D raycastFilter;
