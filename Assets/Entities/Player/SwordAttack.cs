@@ -37,9 +37,9 @@ public class SwordAttack : MonoBehaviour {
     // damage all those tagged as Enemy
     foreach (var collider in results) {
       if (collider.tag == "Enemy") {
-        Slime enemy = collider.GetComponent<Slime>();
-        if (enemy != null) {
-          enemy.TakeDamage(damage, player);
+        Health enemyHealth = collider.GetComponent<Health>();
+        if (enemyHealth != null) {
+          enemyHealth.TakeDamage(damage, player.gameObject);
         }
       }
     }
