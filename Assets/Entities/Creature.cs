@@ -1,3 +1,5 @@
+using System.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +25,7 @@ public class Creature : MonoBehaviour {
         Die();
       } else {
         animator.SetTrigger("damage");
-        StartCoroutine(DamageFadeEffect());
+        StartCoroutine(DamageEffectCoroutine());
       }
     }
     get {
@@ -65,12 +67,29 @@ public class Creature : MonoBehaviour {
     return false;
   }
 
-  public void TakeDamage(float damage) {
+
+  #nullable enable
+  public void TakeDamage(float damage, Creature? attacker) {
     Health -= damage;
+    if(attacker != null) {
+      Vector2 knockDirection = transform.position - attacker.transform.position;
+      Vector2 knockVelocity = knockDirection.normalized * 2;
+
+      // rb.isKinematic = false;
+      rb.AddForce(knockVelocity, ForceMode2D.Impulse);
+      StartCoroutine(KnockbackCoroutine());
+    }
   }
 
+  private IEnumerator KnockbackCoroutine() {
+    if(this.Health > 0) {
+      yield return new WaitForSeconds(0.5f);
+      rb.velocity = Vector2.zero;
+      // rb.isKinematic = true;
+    }
+  }
 
-  IEnumerator DamageFadeEffect() {
+  private IEnumerator DamageEffectCoroutine() {
     entityCollder.enabled = false;
 
     float elapsedTime = 0f;

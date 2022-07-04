@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordAttack : MonoBehaviour {
+  public Player player;
   public Collider2D swordCollider;
   public float damage = 3;
 
@@ -38,7 +39,7 @@ public class SwordAttack : MonoBehaviour {
       if (collider.tag == "Enemy") {
         Slime enemy = collider.GetComponent<Slime>();
         if (enemy != null) {
-          enemy.TakeDamage(damage);
+          enemy.TakeDamage(damage, player);
         }
       }
     }
