@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageAnimation : MonoBehaviour {
+public class DamageAnimation : AnimationComponent {
   [SerializeField] private float totalAnimationTime = 0.5f;
 
-  private Animator animator;
   private Collider2D entityCollider;
   private SpriteRenderer spriteRenderer;
 
-  private void Start() {
-    animator = GetComponent<Animator>();
+  private new void Start() {
+    base.Start();
     entityCollider = GetComponent<Collider2D>();
     spriteRenderer = GetComponent<SpriteRenderer>();
   }
