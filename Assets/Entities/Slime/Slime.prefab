@@ -297,6 +297,20 @@ MonoBehaviour:
   steerForce: 0.1
   lookAhead: 4
   rayCount: 8
+  avoidFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   dangerMask:
     serializedVersion: 2
     m_Bits: 1

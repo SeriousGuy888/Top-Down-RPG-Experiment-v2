@@ -14,18 +14,23 @@ public class EnemyAI : MonoBehaviour {
   public float steerForce = 0.1f;
   public float lookAhead = 4;
   public int rayCount = 12;
+  public ContactFilter2D avoidFilter;
   public LayerMask dangerMask;
   public bool drawDebugLines;
 
   private Vector2[] rayDirections;
   private float[] interest;
+  private float[] avoid;
   private float[] danger;
 
   private Vector2 chosenDir = Vector2.zero;
 
+  private Rigidbody2D rb;
+
   private void Awake() {
     rayDirections = new Vector2[rayCount];
     interest = new float[rayCount];
+    avoid = new float[rayCount];
     danger = new float[rayCount];
 
     for (int i = 0; i < rayCount; i++) {
@@ -37,15 +42,18 @@ public class EnemyAI : MonoBehaviour {
 
   private void Start() {
     targetPlayer = GameManager.Instance.player;
+    rb = GetComponent<Rigidbody2D>();
   }
 
   private void FixedUpdate() {
     setInterest();
+    setAvoid();
     setDanger();
 
     if (drawDebugLines) {
       for (int i = 0; i < rayCount; i++) {
         Debug.DrawRay(transform.position, rayDirections[i] * interest[i], Color.green, Time.deltaTime);
+        Debug.DrawRay(transform.position, rayDirections[i] * avoid[i], Color.yellow, Time.deltaTime);
         Debug.DrawRay(transform.position, rayDirections[i] * danger[i], Color.red, Time.deltaTime);
       }
     }
@@ -77,6 +85,20 @@ public class EnemyAI : MonoBehaviour {
     }
   }
 
+  private void setAvoid() {
+    for (int i = 0; i < rayCount; i++) {
+      // RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirections[i], lookAhead, avoidFilter);
+      RaycastHit2D[] results = new RaycastHit2D[1];
+      int hits = rb.Cast(rayDirections[i], avoidFilter, results, lookAhead);
+      RaycastHit2D hit = results[0];
+
+      if(hit.collider != null)
+        avoid[i] = (lookAhead - hit.distance) / (lookAhead * 2);
+      else
+        avoid[i] = 0;
+    }
+  }
+
   private void setDanger() {
     for (int i = 0; i < rayCount; i++) {
       RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirections[i], lookAhead, dangerMask);
@@ -88,6 +110,10 @@ public class EnemyAI : MonoBehaviour {
     for (int i = 0; i < rayCount; i++) {
       if (danger[i] > 0)
         interest[i] = 0;
+      else {
+        interest[i] -= avoid[i];
+        // interest[i] = Mathf.Max(0, interest[i]);
+      }
     }
 
     chosenDir = Vector2.zero;
