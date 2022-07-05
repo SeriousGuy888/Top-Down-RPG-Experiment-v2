@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour {
   public Creature creature;
 
   [Header("Context Based Steering")]
+  public bool stunned = false; // will be false while knockback is in effect
   public float maxSpeed = 350;
   public float steerForce = 0.1f;
   public float lookAhead = 4;
@@ -46,6 +47,9 @@ public class EnemyAI : MonoBehaviour {
   }
 
   private void FixedUpdate() {
+    if(stunned)
+      return;
+
     setInterest();
     setAvoid();
     setDanger();
@@ -122,4 +126,7 @@ public class EnemyAI : MonoBehaviour {
     }
     chosenDir.Normalize();
   }
+
+  public void Stun() { stunned = true; }
+  public void Unstun() { stunned = false; }
 }
