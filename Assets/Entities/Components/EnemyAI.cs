@@ -127,6 +127,9 @@ public class EnemyAI : MonoBehaviour {
     chosenDir.Normalize();
   }
 
-  public void Stun() { stunned = true; }
+  public void Stun() {
+    stunned = true;
+    creature.SetMovement(Vector2.zero);
+  }
   public void Unstun() { stunned = false; }
 }

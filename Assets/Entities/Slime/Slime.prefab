@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5000663384981216032}
-  strength: 25
-  delay: 1
+  strength: 2.5
+  delay: 0.3
   OnStart:
     m_PersistentCalls:
       m_Calls:
