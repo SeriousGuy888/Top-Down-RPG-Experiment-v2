@@ -9,7 +9,9 @@ public class Health : MonoBehaviour {
   public UnityEvent<GameObject> OnDamageFromSource;
   public UnityEvent OnDeath;
 
-  private float hp = 20f;
+  public float maxHealth = 20f;
+
+  private float hp;
   public float HP {
     set {
       hp = value;
@@ -24,6 +26,10 @@ public class Health : MonoBehaviour {
     get {
       return hp;
     }
+  }
+
+  private void Start() {
+    HP = maxHealth;
   }
 
 

@@ -24,6 +24,16 @@ public class Creature : MonoBehaviour {
     rb = GetComponent<Rigidbody2D>();
   }
 
+  private void FixedUpdate() {
+    bool success = TryMove(moveInput);
+    if (!success) success = TryMove(new Vector2(moveInput.x, 0));
+    if (!success) success = TryMove(new Vector2(0, moveInput.y));
+  }
+
+  public void SetMovement(Vector2 vec) {
+    moveInput = vec;
+  }
+
   protected bool TryMove(Vector2 moveVec) {
     if (moveVec == Vector2.zero || !canMove) {
       animator.SetBool("isMoving", false);

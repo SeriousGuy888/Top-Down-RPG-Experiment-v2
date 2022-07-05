@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4213364119166335614}
   - component: {fileID: 210426951866237181}
   - component: {fileID: 1184529842162022246}
+  - component: {fileID: 1706830096688918878}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Enemy
@@ -176,7 +177,6 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  targetPlayer: {fileID: 0}
 --- !u!114 &7440355173669575089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  maxHealth: 20
 --- !u!114 &4213364119166335614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,3 +278,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3155350b8c21f0b479f5d81629952370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1706830096688918878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6183299328964070583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9e8561c5c2fdd4785845fb0e575ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPlayer: {fileID: 0}
+  targetSighted: 0
+  creature: {fileID: 981385796624045121}
+  maxSpeed: 350
+  steerForce: 0.1
+  lookAhead: 2
+  rayCount: 8
