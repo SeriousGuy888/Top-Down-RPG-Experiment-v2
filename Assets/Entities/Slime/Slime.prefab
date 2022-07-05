@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db31d0ec2e60fb4469cb6cbf5480d8eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
+  moveSpeed: 1
   raycastFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -295,5 +295,9 @@ MonoBehaviour:
   creature: {fileID: 981385796624045121}
   maxSpeed: 350
   steerForce: 0.1
-  lookAhead: 2
+  lookAhead: 4
   rayCount: 8
+  dangerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  drawDebugLines: 1

@@ -12,8 +12,10 @@ public class EnemyAI : MonoBehaviour {
   [Header("Context Based Steering")]
   public float maxSpeed = 350;
   public float steerForce = 0.1f;
-  public float lookAhead = 2;
-  public int rayCount = 8;
+  public float lookAhead = 4;
+  public int rayCount = 12;
+  public LayerMask dangerMask;
+  public bool drawDebugLines;
 
   private Vector2[] rayDirections;
   private float[] interest;
@@ -40,9 +42,20 @@ public class EnemyAI : MonoBehaviour {
   private void FixedUpdate() {
     setInterest();
     setDanger();
+
+    if (drawDebugLines) {
+      for (int i = 0; i < rayCount; i++) {
+        Debug.DrawRay(transform.position, rayDirections[i] * interest[i], Color.green, Time.deltaTime);
+        Debug.DrawRay(transform.position, rayDirections[i] * danger[i], Color.red, Time.deltaTime);
+      }
+    }
+
     chooseDirection();
 
     creature.SetMovement(chosenDir);
+    if (drawDebugLines) {
+      Debug.DrawRay(transform.position, chosenDir, Color.blue, Time.deltaTime);
+    }
   }
 
   private void setInterest() {
@@ -54,7 +67,7 @@ public class EnemyAI : MonoBehaviour {
     Vector2 vecTowardsTarget = (targetPlayer.transform.position - transform.position).normalized;
     for (int i = 0; i < rayCount; i++) {
       var dotProduct = Vector2.Dot(rayDirections[i], vecTowardsTarget);
-      interest[i] = Mathf.Max(0, dotProduct);
+      interest[i] = Mathf.Max(0.1f, dotProduct);
     }
   }
 
@@ -66,14 +79,14 @@ public class EnemyAI : MonoBehaviour {
 
   private void setDanger() {
     for (int i = 0; i < rayCount; i++) {
-      RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirections[i], lookAhead, new LayerMask());
+      RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirections[i], lookAhead, dangerMask);
       danger[i] = hit.collider != null ? 1 : 0;
     }
   }
 
   private void chooseDirection() {
     for (int i = 0; i < rayCount; i++) {
-      if(danger[i] > 0)
+      if (danger[i] > 0)
         interest[i] = 0;
     }
 
