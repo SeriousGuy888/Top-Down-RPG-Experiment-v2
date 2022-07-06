@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f9cc6a4554db94fa85706e771fc369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingTextPrefab: {fileID: 1330096399556850806, guid: 49804fa608ac9b347bd9306c5b05a8ef, type: 3}
   OnDamageFromSource:
     m_PersistentCalls:
       m_Calls:
