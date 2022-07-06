@@ -1092,18 +1092,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3355257311668719854, guid: f2d0d3f0ed0177341bfef700249b1f3d, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355257311668719854, guid: f2d0d3f0ed0177341bfef700249b1f3d, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3355257311668719854, guid: f2d0d3f0ed0177341bfef700249b1f3d, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6183299328964070583, guid: f2d0d3f0ed0177341bfef700249b1f3d, type: 3}
       propertyPath: m_Name
       value: Slime (7)
