@@ -48,3 +48,6 @@ TagManager:
   - name: Entities
     uniqueID: 3044146347
     locked: 0
+  - name: Text
+    uniqueID: 957980319
+    locked: 0
