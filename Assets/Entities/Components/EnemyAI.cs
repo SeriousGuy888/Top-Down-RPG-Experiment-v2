@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour {
   public Vector2? spawnpoint;
-  public Player targetPlayer;
+  public Player player;
   public bool targetSighted = false;
 
   public Creature creature;
@@ -17,11 +17,11 @@ public class EnemyAI : MonoBehaviour {
 
   [Header("NavMeshPlus Pathfinding")]
   private NavMeshPath path;
+  private Vector2 vecToPlayer;
   private Vector2 nextWaypoint;
   private float timeSinceLastPathRecalc;
 
   [Header("Context Based Steering")]
-  public bool stunned = false; // will be false while knockback is in effect
   public float maxSpeed = 350;
   public float steerForce = 0.1f;
   public float lookAhead = 4;
@@ -52,7 +52,7 @@ public class EnemyAI : MonoBehaviour {
   }
 
   private void Start() {
-    targetPlayer = GameManager.Instance.player;
+    player = GameManager.Instance.player;
 
     rb = GetComponent<Rigidbody2D>();
     path = new NavMeshPath();
@@ -60,11 +60,12 @@ public class EnemyAI : MonoBehaviour {
   }
 
   private void FixedUpdate() {
-    if (stunned)
+    if (creature.stunned)
       return;
 
     RaycastHit2D[] hits = new RaycastHit2D[1];
-    rb.Cast((targetPlayer.transform.position - transform.position).normalized, hits, 50);
+    vecToPlayer = player.transform.position - transform.position;
+    rb.Cast(vecToPlayer.normalized, hits, 50);
     targetSighted = (hits[0].collider != null) && (hits[0].transform.tag == "Player");
 
     if (!targetSighted) {
@@ -74,6 +75,12 @@ public class EnemyAI : MonoBehaviour {
     setInterest();
     setAvoid();
     setDanger();
+
+    if(vecToPlayer.magnitude <= 1f) {
+      float dmg = UnityEngine.Random.Range(1f, 3f);
+      player.health.TakeDamage(dmg, gameObject);
+    }
+
 
     if (drawDebugLines) {
       for (int i = 0; i < rayCount; i++) {
@@ -97,7 +104,7 @@ public class EnemyAI : MonoBehaviour {
     timeSinceLastPathRecalc += Time.deltaTime;
     if (timeSinceLastPathRecalc > 1.0f) {
       timeSinceLastPathRecalc -= 1.0f;
-      NavMesh.CalculatePath(transform.position, targetPlayer.transform.position, NavMesh.AllAreas, path);
+      NavMesh.CalculatePath(transform.position, player.transform.position, NavMesh.AllAreas, path);
     }
     if (drawDebugLines) {
       for (int i = 0; i < path.corners.Length - 1; i++)
@@ -117,7 +124,7 @@ public class EnemyAI : MonoBehaviour {
 
     Vector2 vecTowardsTarget;
     if (targetSighted) {
-      vecTowardsTarget = (targetPlayer.transform.position - transform.position).normalized;
+      vecTowardsTarget = vecToPlayer.normalized;
     } else {
       vecTowardsTarget = (nextWaypoint - (Vector2)transform.position).normalized;
     }
@@ -171,10 +178,4 @@ public class EnemyAI : MonoBehaviour {
     }
     chosenDir.Normalize();
   }
-
-  public void Stun() {
-    stunned = true;
-    creature.SetMovement(Vector2.zero);
-  }
-  public void Unstun() { stunned = false; }
 }

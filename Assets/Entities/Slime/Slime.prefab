@@ -177,6 +177,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  health: {fileID: 0}
+  stunned: 0
 --- !u!114 &7440355173669575089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,8 +253,8 @@ MonoBehaviour:
   OnStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1706830096688918878}
-        m_TargetAssemblyTypeName: EnemyAI, Assembly-CSharp
+      - m_Target: {fileID: 981385796624045121}
+        m_TargetAssemblyTypeName: Creature, Assembly-CSharp
         m_MethodName: Stun
         m_Mode: 1
         m_Arguments:
@@ -266,8 +268,8 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1706830096688918878}
-        m_TargetAssemblyTypeName: EnemyAI, Assembly-CSharp
+      - m_Target: {fileID: 981385796624045121}
+        m_TargetAssemblyTypeName: Creature, Assembly-CSharp
         m_MethodName: Unstun
         m_Mode: 1
         m_Arguments:
@@ -315,10 +317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9e8561c5c2fdd4785845fb0e575ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPlayer: {fileID: 0}
+  player: {fileID: 0}
   targetSighted: 0
   creature: {fileID: 981385796624045121}
-  stunned: 0
   maxSpeed: 350
   steerForce: 0.1
   lookAhead: 4

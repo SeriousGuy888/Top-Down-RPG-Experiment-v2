@@ -17,7 +17,7 @@ public class Player : Creature {
 
 
   public void SwordAttackStart() {
-    canMove = false;
+    stunned = true;
   }
   public void SwordAttackDealDamage() {
     swordAttack.Attack(spriteRenderer.flipX
@@ -25,7 +25,7 @@ public class Player : Creature {
       : SwordAttack.AttackDirection.Right);
   }
   public void SwordAttackStop() {
-    canMove = true;
+    stunned = false;
     swordAttack.StopAttack();
   }
 }

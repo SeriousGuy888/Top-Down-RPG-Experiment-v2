@@ -13,7 +13,9 @@ public class Creature : MonoBehaviour {
   protected Collider2D entityCollider;
   protected Rigidbody2D rb;
 
-  protected bool canMove = true;
+  public Health health;
+  public bool stunned = false;
+
   protected Vector2 moveInput;
 
 
@@ -22,6 +24,7 @@ public class Creature : MonoBehaviour {
     animator = GetComponent<Animator>();
     entityCollider = GetComponent<Collider2D>();
     rb = GetComponent<Rigidbody2D>();
+    health = GetComponent<Health>();
   }
 
   private void FixedUpdate() {
@@ -35,7 +38,7 @@ public class Creature : MonoBehaviour {
   }
 
   protected bool TryMove(Vector2 moveVec) {
-    if (moveVec == Vector2.zero || !canMove) {
+    if (moveVec == Vector2.zero || stunned) {
       animator.SetBool("isMoving", false);
       return false;
     }
@@ -59,4 +62,11 @@ public class Creature : MonoBehaviour {
     }
     return false;
   }
+
+
+  public void Stun() {
+    stunned = true;
+    SetMovement(Vector2.zero);
+  }
+  public void Unstun() { stunned = false; }
 }

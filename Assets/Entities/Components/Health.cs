@@ -12,6 +12,9 @@ public class Health : MonoBehaviour {
   public UnityEvent<GameObject> OnDamageFromSource;
   public UnityEvent OnDeath;
 
+  private float lastDamageTime;
+  private float invincibilityTimeOnDamage = 0.25f;
+
   public float maxHealth = 20f;
 
   private float hp;
@@ -21,9 +24,6 @@ public class Health : MonoBehaviour {
       if (hp <= 0) {
         OnDeath.Invoke();
         StartCoroutine(ForceDieAfterTimeout());
-      } else {
-        // animator.SetTrigger("damage");
-        // StartCoroutine(DamageEffectCoroutine());
       }
     }
     get {
@@ -33,15 +33,20 @@ public class Health : MonoBehaviour {
 
   private void Start() {
     HP = maxHealth;
+    lastDamageTime = 0;
   }
 
 
 #nullable enable
   public void TakeDamage(float damage, GameObject? damageSource) {
+    if(Time.time - lastDamageTime < invincibilityTimeOnDamage)
+      return;
+
     HP -= damage;
+    lastDamageTime = Time.time;
 
     if(floatingTextPrefab != null) {
-      ShowFloatingText(damage.ToString(), Color.red);
+      ShowFloatingText((Mathf.Round(damage * 10) / 10).ToString(), Color.red);
     }
 
     if(damageSource != null)
