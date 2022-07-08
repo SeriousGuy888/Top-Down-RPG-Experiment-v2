@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 public class Player : Creature {
   public SwordAttack swordAttack;
 
+  private new void Start() {
+    base.Start();
+    GameManager.Instance.healthBar.SetMaxHealth(this.health.maxHealth);
+  }
+
   private void OnMove(InputValue value) {
     Vector2 direction = value.Get<Vector2>();
     moveInput = direction;
@@ -27,5 +32,9 @@ public class Player : Creature {
   public void SwordAttackStop() {
     stunned = false;
     swordAttack.StopAttack();
+  }
+
+  public void UpdateHealthBarValue() {
+    GameManager.Instance.healthBar.SetHealth(this.health.HP);
   }
 }

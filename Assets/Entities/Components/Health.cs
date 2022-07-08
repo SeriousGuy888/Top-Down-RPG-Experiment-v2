@@ -9,6 +9,7 @@ using TMPro;
 public class Health : MonoBehaviour {
   public GameObject floatingTextPrefab;
 
+  public UnityEvent OnHealthChange;
   public UnityEvent<GameObject> OnDamageFromSource;
   public UnityEvent OnDeath;
 
@@ -21,6 +22,9 @@ public class Health : MonoBehaviour {
   public float HP {
     set {
       hp = value;
+
+      OnHealthChange.Invoke();
+
       if (hp <= 0) {
         OnDeath.Invoke();
         StartCoroutine(ForceDieAfterTimeout());

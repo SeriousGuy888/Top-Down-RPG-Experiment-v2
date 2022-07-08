@@ -9,4 +9,5 @@ public class GameManager : MonoBehaviour {
   }
 
   public Player player;
+  public HealthBar healthBar;
 }
