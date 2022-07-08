@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour {
   public Vector2? spawnpoint;
@@ -8,6 +11,14 @@ public class EnemyAI : MonoBehaviour {
   public bool targetSighted = false;
 
   public Creature creature;
+
+  private Rigidbody2D rb;
+
+
+  [Header("NavMeshPlus Pathfinding")]
+  private NavMeshPath path;
+  private Vector2 nextWaypoint;
+  private float timeSinceLastPathRecalc;
 
   [Header("Context Based Steering")]
   public bool stunned = false; // will be false while knockback is in effect
@@ -26,7 +37,6 @@ public class EnemyAI : MonoBehaviour {
 
   private Vector2 chosenDir = Vector2.zero;
 
-  private Rigidbody2D rb;
 
   private void Awake() {
     rayDirections = new Vector2[rayCount];
@@ -43,12 +53,23 @@ public class EnemyAI : MonoBehaviour {
 
   private void Start() {
     targetPlayer = GameManager.Instance.player;
+
     rb = GetComponent<Rigidbody2D>();
+    path = new NavMeshPath();
+    timeSinceLastPathRecalc = 0;
   }
 
   private void FixedUpdate() {
-    if(stunned)
+    if (stunned)
       return;
+
+    RaycastHit2D[] hits = new RaycastHit2D[1];
+    rb.Cast((targetPlayer.transform.position - transform.position).normalized, hits, 50);
+    targetSighted = (hits[0].collider != null) && (hits[0].transform.tag == "Player");
+
+    if (!targetSighted) {
+      UpdatePath();
+    }
 
     setInterest();
     setAvoid();
@@ -60,6 +81,8 @@ public class EnemyAI : MonoBehaviour {
         Debug.DrawRay(transform.position, rayDirections[i] * avoid[i], Color.yellow, Time.deltaTime);
         Debug.DrawRay(transform.position, rayDirections[i] * danger[i], Color.red, Time.deltaTime);
       }
+
+      Debug.DrawLine(transform.position, nextWaypoint, Color.yellow, Time.deltaTime);
     }
 
     chooseDirection();
@@ -70,13 +93,35 @@ public class EnemyAI : MonoBehaviour {
     }
   }
 
+  private void UpdatePath() {
+    timeSinceLastPathRecalc += Time.deltaTime;
+    if (timeSinceLastPathRecalc > 1.0f) {
+      timeSinceLastPathRecalc -= 1.0f;
+      NavMesh.CalculatePath(transform.position, targetPlayer.transform.position, NavMesh.AllAreas, path);
+    }
+    if (drawDebugLines) {
+      for (int i = 0; i < path.corners.Length - 1; i++)
+        Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.yellow, Time.deltaTime);
+    }
+
+    if (path.corners.Length > 1)
+      nextWaypoint = path.corners[1];
+  }
+
+
   private void setInterest() {
-    if (targetPlayer == null) {
+    if (nextWaypoint == null && !targetSighted) {
       setDefaultInterest();
       return;
     }
 
-    Vector2 vecTowardsTarget = (targetPlayer.transform.position - transform.position).normalized;
+    Vector2 vecTowardsTarget;
+    if (targetSighted) {
+      vecTowardsTarget = (targetPlayer.transform.position - transform.position).normalized;
+    } else {
+      vecTowardsTarget = (nextWaypoint - (Vector2)transform.position).normalized;
+    }
+
     for (int i = 0; i < rayCount; i++) {
       var dotProduct = Vector2.Dot(rayDirections[i], vecTowardsTarget);
       interest[i] = Mathf.Max(0.1f, dotProduct);
@@ -96,7 +141,7 @@ public class EnemyAI : MonoBehaviour {
       int hits = rb.Cast(rayDirections[i], avoidFilter, results, lookAhead);
       RaycastHit2D hit = results[0];
 
-      if(hit.collider != null)
+      if (hit.collider != null)
         avoid[i] = (lookAhead - hit.distance) / (lookAhead * 2);
       else
         avoid[i] = 0;
