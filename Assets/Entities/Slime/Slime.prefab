@@ -457,7 +457,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  health: {fileID: 0}
+  health: {fileID: 7440355173669575089}
   stunned: 0
 --- !u!114 &7440355173669575089
 MonoBehaviour:
@@ -475,8 +475,8 @@ MonoBehaviour:
   OnHealthChange:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7064842975935174495}
-        m_TargetAssemblyTypeName: FloatingHealthBar, Assembly-CSharp
+      - m_Target: {fileID: 354535547}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
         m_MethodName: SetHealth
         m_Mode: 0
         m_Arguments:
@@ -530,6 +530,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 20
+  immortal: 0
 --- !u!114 &4213364119166335614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +650,7 @@ GameObject:
   - component: {fileID: 4112316331314192815}
   - component: {fileID: 6550121535452558793}
   - component: {fileID: 3053890365038054817}
-  - component: {fileID: 7064842975935174495}
+  - component: {fileID: 354535547}
   m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
@@ -739,7 +740,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7064842975935174495
+--- !u!114 &354535547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,7 +749,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9124398057638291017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5eb0335456c09e49b52c16599a777f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 81e2451d9019cdf43bf928b1f6952013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 5675965897823270155}

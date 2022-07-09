@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6741130051786224524}
   - component: {fileID: 1988091455782996722}
-  - component: {fileID: 1044076155559393872}
+  - component: {fileID: 604846164}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1044076155559393872
+--- !u!114 &604846164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,13 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1787182193963673179}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46f9cc6a4554db94fa85706e771fc369, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c8babf0749704429038f5dbc0a108b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDamageFromSource:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  maxHealth: 100
+  prefab: {fileID: 6183299328964070583, guid: f2d0d3f0ed0177341bfef700249b1f3d, type: 3}
+  spawnInterval: 10

@@ -1,7 +1,5 @@
-using System.ComponentModel.Design.Serialization;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
@@ -22,7 +20,6 @@ public class Health : MonoBehaviour {
   public float HP {
     set {
       hp = value;
-
       OnHealthChange.Invoke(hp, maxHealth);
 
       if (hp <= 0) {

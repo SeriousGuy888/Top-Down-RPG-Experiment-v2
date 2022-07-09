@@ -334,7 +334,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  health: {fileID: 0}
+  health: {fileID: 8380956525949312219}
   stunned: 0
   swordAttack: {fileID: 213888301042386724}
 --- !u!95 &715136720
@@ -428,6 +428,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 100
+  immortal: 0
 --- !u!114 &6458772019929124615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,8 +442,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -1167559747843329246}
-  strength: 5
-  delay: 0.25
+  strength: 7
+  delay: 0.3
   OnStart:
     m_PersistentCalls:
       m_Calls:

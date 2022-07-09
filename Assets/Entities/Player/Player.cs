@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +10,7 @@ public class Player : Creature {
   private new void Start() {
     base.Start();
 
-    GameManager.Instance.healthBar.SetMaxHealth(this.health.maxHealth);
+    UpdateHealthBarValue();
 
     playerInput = GetComponent<PlayerInput>();
     moveAction = playerInput.actions["Move"];
@@ -44,6 +42,6 @@ public class Player : Creature {
   }
 
   public void UpdateHealthBarValue() {
-    GameManager.Instance.healthBar.SetHealth(this.health.HP);
+    GameManager.Instance.healthBar.SetHealth(this.health.HP, this.health.maxHealth);
   }
 }

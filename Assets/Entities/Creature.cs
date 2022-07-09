@@ -1,6 +1,3 @@
-using System.Linq;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,15 +5,14 @@ public class Creature : MonoBehaviour {
   [SerializeField] private float moveSpeed = 0.5f;
   [SerializeField] private ContactFilter2D raycastFilter;
 
+  public Health health;
   protected SpriteRenderer spriteRenderer;
   protected Animator animator;
   protected Collider2D entityCollider;
   protected Rigidbody2D rb;
 
-  public Health health;
-  public bool stunned = false;
-
   protected Vector2 moveInput;
+  public bool stunned = false;
 
 
   protected void Start() {
@@ -24,7 +20,6 @@ public class Creature : MonoBehaviour {
     animator = GetComponent<Animator>();
     entityCollider = GetComponent<Collider2D>();
     rb = GetComponent<Rigidbody2D>();
-    health = GetComponent<Health>();
   }
 
   protected void FixedUpdate() {
