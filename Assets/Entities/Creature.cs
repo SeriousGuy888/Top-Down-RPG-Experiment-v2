@@ -27,7 +27,7 @@ public class Creature : MonoBehaviour {
     health = GetComponent<Health>();
   }
 
-  private void FixedUpdate() {
+  protected void FixedUpdate() {
     bool success = TryMove(moveInput);
     if (!success) success = TryMove(new Vector2(moveInput.x, 0));
     if (!success) success = TryMove(new Vector2(0, moveInput.y));
@@ -57,6 +57,7 @@ public class Creature : MonoBehaviour {
 
     animator.SetBool("isMoving", collisionCount == 0);
     if (collisionCount == 0) {
+      rb.velocity = Vector2.zero;
       rb.MovePosition(rb.position + moveVec * moveFactor);
       return true;
     }

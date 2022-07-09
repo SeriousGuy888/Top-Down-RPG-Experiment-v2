@@ -6,13 +6,22 @@ using UnityEngine.InputSystem;
 public class Player : Creature {
   public SwordAttack swordAttack;
 
+  private PlayerInput playerInput;
+  private InputAction moveAction;
+
   private new void Start() {
     base.Start();
+
     GameManager.Instance.healthBar.SetMaxHealth(this.health.maxHealth);
+
+    playerInput = GetComponent<PlayerInput>();
+    moveAction = playerInput.actions["Move"];
   }
 
-  private void OnMove(InputValue value) {
-    Vector2 direction = value.Get<Vector2>();
+  private new void FixedUpdate() {
+    base.FixedUpdate();
+
+    var direction = moveAction.ReadValue<Vector2>();
     moveInput = direction;
   }
 
@@ -22,7 +31,7 @@ public class Player : Creature {
 
 
   public void SwordAttackStart() {
-    stunned = true;
+    // stunned = true;
   }
   public void SwordAttackDealDamage() {
     swordAttack.Attack(spriteRenderer.flipX
@@ -30,7 +39,7 @@ public class Player : Creature {
       : SwordAttack.AttackDirection.Right);
   }
   public void SwordAttackStop() {
-    stunned = false;
+    // stunned = false;
     swordAttack.StopAttack();
   }
 

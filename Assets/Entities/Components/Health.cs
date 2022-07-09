@@ -14,7 +14,7 @@ public class Health : MonoBehaviour {
   public UnityEvent OnDeath;
 
   private float lastDamageTime;
-  private float invincibilityTimeOnDamage = 0.25f;
+  private float invincibilityTimeOnDamage = 0.5f;
 
   public float maxHealth = 20f;
 
