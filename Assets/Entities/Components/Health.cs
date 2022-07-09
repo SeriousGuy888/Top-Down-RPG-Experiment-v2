@@ -9,7 +9,7 @@ using TMPro;
 public class Health : MonoBehaviour {
   public GameObject floatingTextPrefab;
 
-  public UnityEvent OnHealthChange;
+  public UnityEvent<float, float> OnHealthChange;
   public UnityEvent<GameObject> OnDamageFromSource;
   public UnityEvent OnDeath;
 
@@ -23,7 +23,7 @@ public class Health : MonoBehaviour {
     set {
       hp = value;
 
-      OnHealthChange.Invoke();
+      OnHealthChange.Invoke(hp, maxHealth);
 
       if (hp <= 0) {
         OnDeath.Invoke();
