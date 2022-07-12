@@ -1,17 +1,20 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class Player : Creature {
   public SwordAttack swordAttack;
   public Inventory inventory;
+
   private InputMaster controls;
 
   private void Awake() {
-    controls = new();
-    controls.Enable();
+    controls = GameManager.Instance.controls;
 
-    // Trigger sword attack
-    controls.Player.Fire.performed += _ => animator.SetTrigger("swordAttack");
+    controls.Player.Fire.performed += _ => {
+      if(GameManager.Instance.isPointerOverUI)
+        return;
+      animator.SetTrigger("swordAttack");
+    };
   }
 
   private new void Start() {
