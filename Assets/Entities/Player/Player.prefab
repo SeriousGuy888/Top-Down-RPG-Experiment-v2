@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 6458772019929124615}
   - component: {fileID: 6231687035147950966}
   - component: {fileID: 7692733618495282321}
+  - component: {fileID: 2903633009916748144}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -337,6 +338,7 @@ MonoBehaviour:
   health: {fileID: 8380956525949312219}
   stunned: 0
   swordAttack: {fileID: 213888301042386724}
+  inventory: {fileID: 2903633009916748144}
 --- !u!95 &715136720
 Animator:
   serializedVersion: 4
@@ -428,7 +430,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   maxHealth: 100
-  immortal: 0
 --- !u!114 &6458772019929124615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,3 +500,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalAnimationTime: 0.5
+--- !u!114 &2903633009916748144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288487834227682577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b59f53208457374093bcf08cf3c4c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []

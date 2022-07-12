@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player : Creature {
   public SwordAttack swordAttack;
+  public Inventory inventory;
 
   private PlayerInput playerInput;
   private InputAction moveAction;
