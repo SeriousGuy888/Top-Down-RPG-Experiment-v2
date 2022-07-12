@@ -1,8 +1,11 @@
+using System.Net.Sockets;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour {
-  public Transform itemsParent;
   public GameObject inventoryUi;
+  public Transform itemsParent;
+  public GameObject slotPrefab;
+
   private Inventory inventory;
   private InventorySlot[] slots;
 
@@ -17,6 +20,10 @@ public class InventoryUI : MonoBehaviour {
     inventory = GameManager.Instance.player.inventory;
     inventory.onItemChangedCallback += UpdateUI;
 
+    foreach (Transform child in itemsParent.transform)
+      child.gameObject.SetActive(false);
+    for (int i = 0; i < inventory.space; i++)
+      Instantiate(slotPrefab, itemsParent);
     slots = itemsParent.GetComponentsInChildren<InventorySlot>();
   }
 
@@ -26,7 +33,12 @@ public class InventoryUI : MonoBehaviour {
 
   private void UpdateUI() {
     for (int i = 0; i < slots.Length; i++) {
-      if(i < inventory.items.Count)
+      if(!slots[i].gameObject.activeSelf) {
+        i--;
+        continue;
+      }
+
+      if (i < inventory.items.Count)
         slots[i].SetItem(inventory.items[i]);
       else
         slots[i].ClearSlot();
