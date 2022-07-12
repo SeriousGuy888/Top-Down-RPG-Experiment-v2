@@ -4,30 +4,27 @@ using UnityEngine.InputSystem;
 public class Player : Creature {
   public SwordAttack swordAttack;
   public Inventory inventory;
+  private InputMaster controls;
 
-  private PlayerInput playerInput;
-  private InputAction moveAction;
+  private void Awake() {
+    controls = new();
+    controls.Enable();
+
+    // Trigger sword attack
+    controls.Player.Fire.performed += _ => animator.SetTrigger("swordAttack");
+  }
 
   private new void Start() {
     base.Start();
-
     UpdateHealthBarValue();
-
-    playerInput = GetComponent<PlayerInput>();
-    moveAction = playerInput.actions["Move"];
   }
 
   private new void FixedUpdate() {
     base.FixedUpdate();
 
-    var direction = moveAction.ReadValue<Vector2>();
+    var direction = controls.Player.Move.ReadValue<Vector2>();
     moveInput = direction;
   }
-
-  private void OnFire() {
-    animator.SetTrigger("swordAttack");
-  }
-
 
   public void SwordAttackStart() {
     // stunned = true;
