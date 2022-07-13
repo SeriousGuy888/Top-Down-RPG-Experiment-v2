@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd4891159b5fe5468826f55c1acaa51, type: 3}
   m_Name: Hat
   m_EditorClassIdentifier: 
-  name: New Item
-  icon: {fileID: 0}
+  name: Hat
+  icon: {fileID: 21300000, guid: b96431aef461c644bba11e7a32ef794a, type: 3}
+  slot: 0
+  defenceModifier: 2
+  attackModifier: 0

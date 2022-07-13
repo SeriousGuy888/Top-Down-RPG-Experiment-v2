@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 6231687035147950966}
   - component: {fileID: 7692733618495282321}
   - component: {fileID: 2903633009916748144}
+  - component: {fileID: 4104332421149609777}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -256,6 +257,7 @@ MonoBehaviour:
   stunned: 0
   swordAttack: {fileID: 213888301042386724}
   inventory: {fileID: 2903633009916748144}
+  equipment: {fileID: 4104332421149609777}
 --- !u!95 &715136720
 Animator:
   serializedVersion: 4
@@ -431,3 +433,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 12
   items: []
+--- !u!114 &4104332421149609777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288487834227682577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c36e7ba14ac8d48b7089cedbff372f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

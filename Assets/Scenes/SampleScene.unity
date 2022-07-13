@@ -209,7 +209,7 @@ SpriteRenderer:
   m_SortingLayerID: -1250820949
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9585ff6c71c7cb44991bdfefa7f127d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b96431aef461c644bba11e7a32ef794a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf48a8c952c4234aa1e110147937904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 5640f922f657d904cb8a92041b0791ed, type: 2}
+  item: {fileID: 11400000, guid: 2d5606bd881c0314baa5945ca50b8a01, type: 2}
 --- !u!1 &260516142
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &563365464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10060,11 +10060,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3807825916231518110, guid: 91a05d4ee76f7284e8d8035968ca9057, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3807825916231518110, guid: 91a05d4ee76f7284e8d8035968ca9057, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3807825916231518110, guid: 91a05d4ee76f7284e8d8035968ca9057, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

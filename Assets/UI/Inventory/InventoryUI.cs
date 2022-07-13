@@ -16,6 +16,7 @@ public class InventoryUI : MonoBehaviour {
   private void Start() {
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
+    inventoryUi.SetActive(false);
 
     inventory = GameManager.Instance.player.inventory;
     inventory.onItemChangedCallback += UpdateUI;
