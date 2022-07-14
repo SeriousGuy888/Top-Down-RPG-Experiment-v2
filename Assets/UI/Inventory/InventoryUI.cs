@@ -1,31 +1,48 @@
 using System.Net.Sockets;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class InventoryUI : MonoBehaviour {
+  public Inventory inventory;
   public GameObject inventoryUi;
   public Transform itemsParent;
   public GameObject slotPrefab;
 
-  private Inventory inventory;
   private InventorySlot[] slots;
 
   private InputMaster controls;
 
-
-
   private void Start() {
+    if(!Application.isPlaying)
+      return;
+
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
     inventoryUi.SetActive(false);
 
-    inventory = GameManager.Instance.player.inventory;
     inventory.onItemChangedCallback += UpdateUI;
 
-    foreach (Transform child in itemsParent.transform)
-      child.gameObject.SetActive(false);
-    for (int i = 0; i < inventory.space; i++)
-      Instantiate(slotPrefab, itemsParent);
     slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+  }
+
+  private void Update() {
+    if(Application.isPlaying)
+      return;
+
+    int existingSlots = itemsParent.childCount;
+    int neededSlots = inventory.space;
+
+
+    if (existingSlots < neededSlots) {
+      for (int i = 0; i < neededSlots - existingSlots; i++) {
+        Instantiate(slotPrefab, itemsParent);
+      }
+      return;
+    }
+    while (existingSlots > neededSlots) {
+      DestroyImmediate(itemsParent.GetChild(neededSlots).gameObject);
+      existingSlots--;
+    }
   }
 
   private void ToggleInventory() {
