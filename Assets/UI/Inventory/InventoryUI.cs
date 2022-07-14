@@ -4,8 +4,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class InventoryUI : MonoBehaviour {
   public Inventory inventory;
-  public GameObject inventoryUi;
-  public Transform itemsParent;
+  public Transform slotsContainer;
   public GameObject slotPrefab;
 
   private InventorySlot[] slots;
@@ -18,35 +17,35 @@ public class InventoryUI : MonoBehaviour {
 
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
-    inventoryUi.SetActive(false);
+    slotsContainer.gameObject.SetActive(false);
 
     inventory.onItemChangedCallback += UpdateUI;
 
-    slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+    slots = slotsContainer.GetComponentsInChildren<InventorySlot>();
   }
 
   private void Update() {
     if(Application.isPlaying)
       return;
 
-    int existingSlots = itemsParent.childCount;
+    int existingSlots = slotsContainer.childCount;
     int neededSlots = Mathf.Max(inventory.space, 0);
 
 
     if (existingSlots < neededSlots) {
       for (int i = 0; i < neededSlots - existingSlots; i++) {
-        Instantiate(slotPrefab, itemsParent);
+        Instantiate(slotPrefab, slotsContainer);
       }
       return;
     }
     while (existingSlots > neededSlots) {
-      DestroyImmediate(itemsParent.GetChild(neededSlots).gameObject);
+      DestroyImmediate(slotsContainer.GetChild(neededSlots).gameObject);
       existingSlots--;
     }
   }
 
   private void ToggleInventory() {
-    inventoryUi.SetActive(!inventoryUi.activeSelf);
+    slotsContainer.gameObject.SetActive(!slotsContainer.gameObject.activeSelf);
   }
 
   private void UpdateUI() {
