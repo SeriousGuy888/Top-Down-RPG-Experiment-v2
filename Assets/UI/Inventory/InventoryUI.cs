@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -34,7 +35,7 @@ public class InventoryUI : MonoBehaviour {
 
     if (existingSlots < neededSlots) {
       for (int i = 0; i < neededSlots - existingSlots; i++) {
-        Instantiate(slotPrefab, slotsContainer);
+        PrefabUtility.InstantiatePrefab(slotPrefab, slotsContainer);
       }
       return;
     }
