@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour {
       return;
 
     int existingSlots = itemsParent.childCount;
-    int neededSlots = inventory.space;
+    int neededSlots = Mathf.Max(inventory.space, 0);
 
 
     if (existingSlots < neededSlots) {
