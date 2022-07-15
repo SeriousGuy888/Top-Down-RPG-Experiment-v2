@@ -5,61 +5,77 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class InventoryUI : MonoBehaviour {
   public Inventory inventory;
-  public Transform slotsContainer;
+  public Equipment equipment;
+
   public GameObject slotPrefab;
 
-  private InventorySlot[] slots;
+  public Transform invSlotsContainer;
+  private InventorySlot[] invSlots;
+
+  public Transform equipSlotsContainer;
+  public Sprite[] equipSlotsIcons;
+  private InventorySlot[] equipSlots;
 
   private InputMaster controls;
 
   private void Start() {
-    if(!Application.isPlaying)
+    if (!Application.isPlaying)
       return;
 
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
-    slotsContainer.gameObject.SetActive(false);
+    invSlotsContainer.gameObject.SetActive(false);
 
     inventory.onItemChangedCallback += UpdateUI;
 
-    slots = slotsContainer.GetComponentsInChildren<InventorySlot>();
+    invSlots = invSlotsContainer.GetComponentsInChildren<InventorySlot>();
+    equipSlots = equipSlotsContainer.GetComponentsInChildren<InventorySlot>();
   }
 
   private void Update() {
-    if(Application.isPlaying)
+    if (Application.isPlaying)
       return;
 
-    int existingSlots = slotsContainer.childCount;
-    int neededSlots = Mathf.Max(inventory.space, 0);
+    GenerateRequiredSlots(invSlotsContainer, Mathf.Max(inventory.space, 0), false);
+    GenerateRequiredSlots(equipSlotsContainer, Mathf.Max(equipment.slotCount, 0), true);
+  }
 
+  private void GenerateRequiredSlots(Transform container, int neededSlots, bool useEquipmentIcons) {
+    int existingSlots = container.childCount;
 
+    while (existingSlots > neededSlots) {
+      DestroyImmediate(container.GetChild(neededSlots).gameObject);
+      existingSlots--;
+    }
     if (existingSlots < neededSlots) {
       for (int i = 0; i < neededSlots - existingSlots; i++) {
-        PrefabUtility.InstantiatePrefab(slotPrefab, slotsContainer);
+        PrefabUtility.InstantiatePrefab(slotPrefab, container);
       }
-      return;
     }
-    while (existingSlots > neededSlots) {
-      DestroyImmediate(slotsContainer.GetChild(neededSlots).gameObject);
-      existingSlots--;
+
+    if (useEquipmentIcons) {
+      for (int i = 0; i < neededSlots; i++) {
+        if (i < equipSlotsIcons.Length)
+          container.GetChild(i).GetComponent<InventorySlot>().defaultSprite = equipSlotsIcons[i];
+      }
     }
   }
 
   private void ToggleInventory() {
-    slotsContainer.gameObject.SetActive(!slotsContainer.gameObject.activeSelf);
+    invSlotsContainer.gameObject.SetActive(!invSlotsContainer.gameObject.activeSelf);
   }
 
   private void UpdateUI() {
-    for (int i = 0; i < slots.Length; i++) {
-      if(!slots[i].gameObject.activeSelf) {
+    for (int i = 0; i < invSlots.Length; i++) {
+      if (!invSlots[i].gameObject.activeSelf) {
         i--;
         continue;
       }
 
       if (i < inventory.items.Count)
-        slots[i].SetItem(inventory.items[i]);
+        invSlots[i].SetItem(inventory.items[i]);
       else
-        slots[i].ClearSlot();
+        invSlots[i].ClearSlot();
     }
   }
 }

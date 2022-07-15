@@ -4,13 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Equipment : MonoBehaviour {
+  public int slotCount;
+
   private Equippable[] currentEquipment;
   private Inventory inventory;
 
   private void Start() {
     inventory = GameManager.Instance.player.inventory;
 
-    int slotCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+    int actualSlotCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+    if(actualSlotCount != slotCount)
+      Debug.LogWarning("Incorrect number of equipment slots!");
+    slotCount = actualSlotCount;
+    
     currentEquipment = new Equippable[slotCount];
   }
 
