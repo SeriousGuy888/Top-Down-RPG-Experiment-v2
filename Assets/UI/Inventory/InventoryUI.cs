@@ -31,19 +31,21 @@ public class InventoryUI : MonoBehaviour {
 
     inventory.onItemChangedCallback += UpdateUI;
 
-    invSlots = invSlotsContainer.GetComponentsInChildren<InventorySlot>();
-    equipSlots = equipSlotsContainer.GetComponentsInChildren<InventorySlot>();
+    SetupSlots();
   }
 
+#region Automatic UI Generation in Editor
   private void Update() {
     if (Application.isPlaying)
       return;
 
-    GenerateRequiredSlots(invSlotsContainer, Mathf.Max(inventory.space, 0), false);
-    GenerateRequiredSlots(equipSlotsContainer, Mathf.Max(equipment.slotCount, 0), true);
+    GenerateRequiredSlots(invSlotsContainer, Mathf.Max(inventory.space, 0));
+    GenerateRequiredSlots(equipSlotsContainer, Mathf.Max(equipment.slotCount, 0));
+
+    SetupSlots();
   }
 
-  private void GenerateRequiredSlots(Transform container, int neededSlots, bool useEquipmentIcons) {
+  private void GenerateRequiredSlots(Transform container, int neededSlots) {
     int existingSlots = container.childCount;
 
     while (existingSlots > neededSlots) {
@@ -55,14 +57,18 @@ public class InventoryUI : MonoBehaviour {
         PrefabUtility.InstantiatePrefab(slotPrefab, container);
       }
     }
+  }
+#endregion
 
-    if (useEquipmentIcons) {
-      for (int i = 0; i < neededSlots; i++) {
-        if (i < equipSlotsIcons.Length)
-          container.GetChild(i).GetComponent<InventorySlot>().defaultSprite = equipSlotsIcons[i];
-      }
+  private void SetupSlots() {
+    invSlots = invSlotsContainer.GetComponentsInChildren<InventorySlot>();
+    equipSlots = equipSlotsContainer.GetComponentsInChildren<InventorySlot>();
+
+    for (int i = 0; i < equipSlots.Length; i++) {
+      equipSlots[i].defaultSprite = equipSlotsIcons[i];
     }
   }
+
 
   private void ToggleInventory() => ToggleInventory(!inventoryOpen);
   private void ToggleInventory(bool open) {
@@ -74,15 +80,18 @@ public class InventoryUI : MonoBehaviour {
 
   private void UpdateUI() {
     for (int i = 0; i < invSlots.Length; i++) {
-      if (!invSlots[i].gameObject.activeSelf) {
-        i--;
-        continue;
-      }
-
       if (i < inventory.items.Count)
         invSlots[i].SetItem(inventory.items[i]);
       else
         invSlots[i].ClearSlot();
+    }
+
+    for (int i = 0; i < equipSlots.Length; i++) {
+      Item item = equipment.items[i];
+      if(item)
+        equipSlots[i].SetItem(item);
+      else
+        equipSlots[i].ClearSlot();
     }
   }
 }
