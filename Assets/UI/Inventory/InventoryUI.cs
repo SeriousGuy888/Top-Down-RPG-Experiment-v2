@@ -6,8 +6,8 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour {
   public Inventory inventory;
   public Equipment equipment;
-
   public GameObject slotPrefab;
+  private InputMaster controls;
 
   public Transform invSlotsContainer;
   private InventorySlot[] invSlots;
@@ -16,11 +16,14 @@ public class InventoryUI : MonoBehaviour {
   public Sprite[] equipSlotsIcons;
   private InventorySlot[] equipSlots;
 
-  private InputMaster controls;
+  public bool inventoryOpen = false;
+
 
   private void Start() {
     if (!Application.isPlaying)
       return;
+
+    ToggleInventory(false);
 
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
@@ -61,8 +64,12 @@ public class InventoryUI : MonoBehaviour {
     }
   }
 
-  private void ToggleInventory() {
-    invSlotsContainer.gameObject.SetActive(!invSlotsContainer.gameObject.activeSelf);
+  private void ToggleInventory() => ToggleInventory(!inventoryOpen);
+  private void ToggleInventory(bool open) {
+    inventoryOpen = open;
+    foreach (Transform child in transform) {
+      child.gameObject.SetActive(inventoryOpen);
+    }
   }
 
   private void UpdateUI() {
