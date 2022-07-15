@@ -14,11 +14,11 @@ public class Equippable : Item {
   public override void Use() {
     base.Use();
     if (equipped) {
-      GameManager.Instance.player.equipment.Unequip((int)this.slot);
+      Equipment.Instance.Unequip((int)this.slot);
       equipped = false;
     } else {
-      GameManager.Instance.player.equipment.Equip(this);
-      GameManager.Instance.player.inventory.Remove(this);
+      Equipment.Instance.Equip(this);
+      Inventory.Instance.Remove(this);
       equipped = true;
     }
   }

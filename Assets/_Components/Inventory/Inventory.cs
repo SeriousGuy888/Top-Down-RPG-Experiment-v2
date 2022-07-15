@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
+  public static Inventory Instance;
+  private void Awake() {
+    Instance = this;
+  }
+
   public delegate void OnItemChanged();
   public OnItemChanged onItemChangedCallback;
 

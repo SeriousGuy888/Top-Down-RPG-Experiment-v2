@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Equipment : MonoBehaviour {
+  public static Equipment Instance;
+  private void Awake() {
+    Instance = this;
+  }
+
   public delegate void OnItemChanged();
   public OnItemChanged onItemChangedCallback;
 
   public int slotCount;
   public Equippable[] items;
 
-  private Inventory inventory;
-
   private void Start() {
-    inventory = GameManager.Instance.player.inventory;
-
     int actualSlotCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
     if (actualSlotCount != slotCount)
       Debug.LogWarning("Incorrect number of equipment slots!");
@@ -27,7 +28,7 @@ public class Equipment : MonoBehaviour {
 
     // Return any item already in that slot to the inventory
     if (items[slotIndex] != null) {
-      inventory.Add(items[slotIndex]);
+      Inventory.Instance.Add(items[slotIndex]);
     }
 
     items[slotIndex] = item;
@@ -38,7 +39,7 @@ public class Equipment : MonoBehaviour {
   public void Unequip(int slotIndex) {
     Equippable item = items[slotIndex];
     if (item != null) {
-      bool success = inventory.Add(item);
+      bool success = Inventory.Instance.Add(item);
       if (success) {
         items[slotIndex] = null;
         if (onItemChangedCallback != null)
