@@ -30,6 +30,7 @@ public class InventoryUI : MonoBehaviour {
     invSlotsContainer.gameObject.SetActive(false);
 
     inventory.onItemChangedCallback += UpdateUI;
+    equipment.onItemChangedCallback += UpdateUI;
 
     SetupSlots();
   }
@@ -88,7 +89,7 @@ public class InventoryUI : MonoBehaviour {
 
     for (int i = 0; i < equipSlots.Length; i++) {
       Item item = equipment.items[i];
-      if(item)
+      if(item != null)
         equipSlots[i].SetItem(item);
       else
         equipSlots[i].ClearSlot();

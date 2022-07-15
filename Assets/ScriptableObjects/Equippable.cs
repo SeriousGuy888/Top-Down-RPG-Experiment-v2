@@ -9,10 +9,18 @@ public class Equippable : Item {
   public int defenceModifier;
   public int attackModifier;
 
+  private bool equipped = false;
+
   public override void Use() {
     base.Use();
-    GameManager.Instance.player.equipment.Equip(this);
-    GameManager.Instance.player.inventory.Remove(this);
+    if (equipped) {
+      GameManager.Instance.player.equipment.Unequip((int)this.slot);
+      equipped = false;
+    } else {
+      GameManager.Instance.player.equipment.Equip(this);
+      GameManager.Instance.player.inventory.Remove(this);
+      equipped = true;
+    }
   }
 }
 

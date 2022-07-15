@@ -1,9 +1,11 @@
-using System.Net.NetworkInformation;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Equipment : MonoBehaviour {
+  public delegate void OnItemChanged();
+  public OnItemChanged onItemChangedCallback;
+
   public int slotCount;
   public Equippable[] items;
 
@@ -29,14 +31,19 @@ public class Equipment : MonoBehaviour {
     }
 
     items[slotIndex] = item;
+    if (onItemChangedCallback != null)
+      onItemChangedCallback.Invoke();
   }
 
   public void Unequip(int slotIndex) {
     Equippable item = items[slotIndex];
     if (item != null) {
       bool success = inventory.Add(item);
-      if (success)
+      if (success) {
         items[slotIndex] = null;
+        if (onItemChangedCallback != null)
+          onItemChangedCallback.Invoke();
+      }
     }
   }
 }
