@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b0fee1a1574d214fa29b0da01c09c7d
+guid: be23cddd362aae74db070ff2b8d5a4b6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Equipment_0
+      name: Inventory UI_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14daed94d3e3d104b860ea2e09572bb1
+      internalID: -1324720273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5980c7eca4d1ca49880dc2df50db739
+      internalID: 32713264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab9188feda25518409f86aabb62854d8
+      internalID: -1527049076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d28e736e1eabf4088ef27982a4b54c
+      internalID: 577017081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d0d1e94bc02e7845a4d82e2229e26b1
+      internalID: -865008630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfe6d7ec37319ca4687ac7d006a79673
+      internalID: 1395891508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Inventory UI_6
       rect:
         serializedVersion: 2
         x: 0
@@ -112,20 +238,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b1c6024df5cd87419dc9c74bd455ba3
-      internalID: -2088780878
+      spriteID: 8f855e6569a91074eb4ba2a697138498
+      internalID: 14891537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Equipment_1
+      name: Inventory UI_7
       rect:
         serializedVersion: 2
         x: 16
@@ -133,20 +259,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ef1941e3e059d844b23d98bcd6bf496
-      internalID: 12503905
+      spriteID: 68845e07de8134e40b8592928868b9ee
+      internalID: -865236349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Equipment_2
+      name: Inventory UI_8
       rect:
         serializedVersion: 2
         x: 32
@@ -154,77 +280,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 373d76dcc90c14f458c2c9024d9fcc8e
-      internalID: 814972950
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Equipment_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d516a194543e454448525763a3a5fb3b
-      internalID: 900720402
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Equipment_4
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b927c9a3430695c4eaf3456e74ca9010
-      internalID: 1857347722
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Equipment_5
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6684b2b09b610644d894690009200acd
-      internalID: 1453038334
+      spriteID: d779717054814c74ab94b1f59a100366
+      internalID: -1964838665
       vertices: []
       indices: 
       edges: []
@@ -240,12 +303,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Equipment_2: 814972950
-      Equipment_3: 900720402
-      Equipment_0: -2088780878
-      Equipment_4: 1857347722
-      Equipment_1: 12503905
-      Equipment_5: 1453038334
+      Inventory UI_6: 14891537
+      Inventory UI_4: -865008630
+      Inventory UI_3: 577017081
+      Inventory UI_2: -1527049076
+      Inventory UI_8: -1964838665
+      Inventory UI_1: 32713264
+      Inventory UI_0: -1324720273
+      Inventory UI_5: 1395891508
+      Inventory UI_7: -865236349
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

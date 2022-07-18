@@ -8,14 +8,31 @@ public class Inventory : MonoBehaviour {
     Instance = this;
   }
 
+  private InputMaster controls;
+
   public delegate void OnItemChanged();
   public OnItemChanged onItemChangedCallback;
 
-  public int space = 12;
+  public InventoryUI inventoryUI;
+  public int inventorySize = 12;
   public List<Item> items = new();
+  
+
+  private void Start() {
+    inventoryUI.InitInventoryUI(inventorySize);
+
+    controls = GameManager.Instance.controls;
+    controls.Player.ToggleInventory.performed += _ => {
+      if (inventoryUI.gameObject.activeSelf) {
+        inventoryUI.Hide();
+      } else {
+        inventoryUI.Show();
+      }
+    };
+  }
 
   public bool Add(Item item) {
-    if (items.Count >= space) {
+    if (items.Count >= inventorySize) {
       Debug.Log("not enough room");
       return false;
     }
