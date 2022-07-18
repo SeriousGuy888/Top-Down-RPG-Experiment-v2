@@ -27,7 +27,7 @@ public class InventoryUI : MonoBehaviour {
 
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => ToggleInventory();
-    invSlotsContainer.gameObject.SetActive(false);
+    // invSlotsContainer.gameObject.SetActive(false);
 
     inventory.onItemChangedCallback += UpdateUI;
     equipment.onItemChangedCallback += UpdateUI;
@@ -35,31 +35,31 @@ public class InventoryUI : MonoBehaviour {
     SetupSlots();
   }
 
-#region Automatic UI Generation in Editor
-  private void Update() {
-    if (Application.isPlaying)
-      return;
+// #region Automatic UI Generation in Editor
+//   private void Update() {
+//     if (Application.isPlaying)
+//       return;
 
-    GenerateRequiredSlots(invSlotsContainer, Mathf.Max(inventory.space, 0));
-    GenerateRequiredSlots(equipSlotsContainer, Mathf.Max(equipment.slotCount, 0));
+//     GenerateRequiredSlots(invSlotsContainer, Mathf.Max(inventory.space, 0));
+//     GenerateRequiredSlots(equipSlotsContainer, Mathf.Max(equipment.slotCount, 0));
 
-    SetupSlots();
-  }
+//     SetupSlots();
+//   }
 
-  private void GenerateRequiredSlots(Transform container, int neededSlots) {
-    int existingSlots = container.childCount;
+//   private void GenerateRequiredSlots(Transform container, int neededSlots) {
+//     int existingSlots = container.childCount;
 
-    while (existingSlots > neededSlots) {
-      DestroyImmediate(container.GetChild(neededSlots).gameObject);
-      existingSlots--;
-    }
-    if (existingSlots < neededSlots) {
-      for (int i = 0; i < neededSlots - existingSlots; i++) {
-        PrefabUtility.InstantiatePrefab(slotPrefab, container);
-      }
-    }
-  }
-#endregion
+//     while (existingSlots > neededSlots) {
+//       DestroyImmediate(container.GetChild(neededSlots).gameObject);
+//       existingSlots--;
+//     }
+//     if (existingSlots < neededSlots) {
+//       for (int i = 0; i < neededSlots - existingSlots; i++) {
+//         PrefabUtility.InstantiatePrefab(slotPrefab, container);
+//       }
+//     }
+//   }
+// #endregion
 
   private void SetupSlots() {
     invSlots = invSlotsContainer.GetComponentsInChildren<InventorySlot>();
