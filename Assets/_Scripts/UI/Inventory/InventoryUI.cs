@@ -19,25 +19,40 @@ public class InventoryUI : MonoBehaviour {
     equipment.onItemChangedCallback += UpdateUI;
   }
 
+  public void Show() => gameObject.SetActive(true);
+  public void Hide() => gameObject.SetActive(false);
+
   public void InitInventoryUI(int inventorySize) {
     inventorySlots = new InventorySlot[inventorySize];
     for (int i = 0; i < inventorySize; i++) {
       var newSlot = Instantiate(slotPrefab, Vector3.zero, Quaternion.identity);
       newSlot.transform.SetParent(inventorySlotsContainer);
       inventorySlots[i] = newSlot;
+
+      newSlot.OnItemClicked += HandleItemSelect;
+      newSlot.OnItemRightClicked += HandleItemShowActions;
+      newSlot.OnItemDragStart += HandleDragStart;
+      newSlot.OnItemDragEnd += HandleDragEnd;
+      newSlot.OnItemDroppedOn += HandleSwap;
     }
   }
 
-  public void Show() => gameObject.SetActive(true);
-  public void Hide() => gameObject.SetActive(false);
+  private void HandleItemSelect(InventorySlot slot) {
+    Debug.Log(slot.name);
+  }
+  private void HandleItemShowActions(InventorySlot slot) { }
+  private void HandleDragStart(InventorySlot slot) { }
+  private void HandleDragEnd(InventorySlot slot) { }
+  private void HandleSwap(InventorySlot slot) { }
+
 
   private void UpdateUI() {
-    for (int i = 0; i < inventorySlots.Length; i++) {
-      if (i < inventory.items.Count)
-        inventorySlots[i].SetItem(inventory.items[i]);
-      else
-        inventorySlots[i].ClearSlot();
-    }
+    // for (int i = 0; i < inventorySlots.Length; i++) {
+    //   if (i < inventory.items.Count)
+    //     inventorySlots[i].SetItem(inventory.items[i]);
+    //   else
+    //     inventorySlots[i].ClearSlot();
+    // }
 
     // for (int i = 0; i < equipSlots.Length; i++) {
     //   Item item = equipment.items[i];

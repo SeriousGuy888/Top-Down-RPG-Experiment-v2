@@ -1,49 +1,116 @@
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 public class InventorySlot : MonoBehaviour {
-  public Image icon; // The icon being displayed right now
   public Sprite defaultSprite; // Sprite to display as icon when slot is empty
 
-  private Item item;
+  public Image itemImage; // The image component in which to display the icon
+  public Image borderImage; // The image component that is visible when this slot is selected
+  public TMP_Text quantityText; // The text component for stack number
 
-  private void Update() {
-    if(Application.isPlaying)
+  private bool hasItem = false;
+
+  public event Action<InventorySlot>
+    OnItemClicked,
+    OnItemRightClicked,
+    OnItemDroppedOn, // When dropping item on another slot
+    OnItemDragStart,
+    OnItemDragEnd;
+
+
+  private void Awake() {
+    ResetData();
+    Deselect();
+  }
+
+  public void ResetData() {
+    itemImage.gameObject.SetActive(false);
+    hasItem = false;
+  }
+
+  public void SetData(Sprite sprite, int quantity) {
+    itemImage.gameObject.SetActive(true);
+    itemImage.sprite = sprite;
+    quantityText.text = quantity.ToString();
+    hasItem = true;
+  }
+
+  private void Deselect() {
+    borderImage.enabled = false;
+  }
+
+  public void Select() {
+    borderImage.enabled = true;
+  }
+
+
+
+  public void OnDragStart() {
+    if (hasItem)
+      OnItemDragStart?.Invoke(this);
+  }
+
+  public void OnDragEnd() {
+    OnItemDragEnd?.Invoke(this);
+  }
+
+  public void OnDrop() {
+    OnItemDroppedOn.Invoke(this);
+  }
+
+  public void OnPointerClick(BaseEventData data) {
+    if (!hasItem)
       return;
-    
-    if(item == null)
-      SetEmptyIcon();
+
+    var pointerData = (PointerEventData)data;
+    if (pointerData.button == PointerEventData.InputButton.Right)
+      OnItemRightClicked?.Invoke(this);
+    else
+      OnItemClicked?.Invoke(this);
   }
 
-  public void SetItem(Item newItem) {
-    item = newItem;
 
-    icon.sprite = item.icon;
-    icon.color = new Color(1, 1, 1, 1);
-    icon.enabled = true;
-  }
 
-  public void ClearSlot() {
-    item = null;
-    SetEmptyIcon();
-  }
+  // private void Update() {
+  //   if (Application.isPlaying)
+  //     return;
 
-  private void SetEmptyIcon() {
-    if (defaultSprite != null) {
-      icon.sprite = defaultSprite;
-      icon.color = new Color(1, 1, 1, 0.5f);
-      icon.enabled = true;
-    } else {
-      icon.sprite = null;
-      icon.enabled = false;
-    }
-  }
+  //   if (item == null)
+  //     SetEmptyIcon();
+  // }
 
-  public void UseItem() {
-    if (item == null)
-      return;
+  // public void SetItem(Item newItem) {
+  //   item = newItem;
 
-    item.Use();
-  }
+  //   itemImage.sprite = item.icon;
+  //   itemImage.color = new Color(1, 1, 1, 1);
+  //   itemImage.enabled = true;
+  // }
+
+  // public void ClearSlot() {
+  //   item = null;
+  //   SetEmptyIcon();
+  // }
+
+  // private void SetEmptyIcon() {
+  //   if (defaultSprite != null) {
+  //     itemImage.sprite = defaultSprite;
+  //     itemImage.color = new Color(1, 1, 1, 0.5f);
+  //     itemImage.enabled = true;
+  //   } else {
+  //     itemImage.sprite = null;
+  //     itemImage.enabled = false;
+  //   }
+  // }
+
+  // public void UseItem() {
+  //   if (item == null)
+  //     return;
+
+  //   item.Use();
+  // }
 }
