@@ -1,3 +1,4 @@
+using System;
 using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
@@ -10,12 +11,14 @@ public class InventoryUI : MonoBehaviour {
 
   public Transform inventorySlotsContainer;
   public InventoryDescription descriptionPanel;
+  public MouseFollower mouseFollower;
 
   private InventorySlot[] inventorySlots;
+  private int currentDraggedItemIndex = -1;
 
   private void Awake() {
     Hide();
-
+    mouseFollower.Toggle(false);
     descriptionPanel.ResetDescription();
 
     // inventory.onItemChangedCallback += UpdateUI;
@@ -51,13 +54,45 @@ public class InventoryUI : MonoBehaviour {
     }
   }
 
+
   private void HandleItemSelect(InventorySlot slot) {
     Debug.Log(slot.name);
   }
-  private void HandleItemShowActions(InventorySlot slot) { }
-  private void HandleDragStart(InventorySlot slot) { }
-  private void HandleDragEnd(InventorySlot slot) { }
-  private void HandleSwap(InventorySlot slot) { }
+
+  private void HandleItemShowActions(InventorySlot slot) {
+
+  }
+
+  private void HandleDragStart(InventorySlot slot) {
+    int index = Array.IndexOf(inventorySlots, slot);
+    if(index == -1)
+      return;
+    currentDraggedItemIndex = index;
+
+    mouseFollower.Toggle(true);
+    mouseFollower.SetData(inventory.items[index].icon, 1);
+  }
+
+  private void HandleDragEnd(InventorySlot slot) {
+    mouseFollower.Toggle(false);
+    currentDraggedItemIndex = -1;
+  }
+
+  private void HandleSwap(InventorySlot slot) {
+    int swappingIndex = Array.IndexOf(inventorySlots, slot);
+    if (swappingIndex == -1) {
+      mouseFollower.Toggle(false);
+      currentDraggedItemIndex = -1;
+      return;
+    }
+
+    inventorySlots[currentDraggedItemIndex].SetData(inventory.items[swappingIndex].icon, 1);
+    inventorySlots[swappingIndex].SetData(inventory.items[currentDraggedItemIndex].icon, 1);
+    
+    mouseFollower.Toggle(false);
+    currentDraggedItemIndex = -1;
+  }
+
 
 
   private void UpdateUI() {

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // [ExecuteInEditMode]
-public class InventorySlot : MonoBehaviour {
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, IBeginDragHandler, IEndDragHandler, IDragHandler {
   public Sprite defaultSprite; // Sprite to display as icon when slot is empty
 
   public Image itemImage; // The image component in which to display the icon
@@ -49,28 +49,32 @@ public class InventorySlot : MonoBehaviour {
 
 
 
-  public void OnDragStart() {
-    if (hasItem)
-      OnItemDragStart?.Invoke(this);
-  }
-
-  public void OnDragEnd() {
-    OnItemDragEnd?.Invoke(this);
-  }
-
-  public void OnDrop() {
-    OnItemDroppedOn.Invoke(this);
-  }
-
-  public void OnPointerClick(BaseEventData data) {
+  public void OnPointerClick(PointerEventData pointerData) {
     if (!hasItem)
       return;
 
-    var pointerData = (PointerEventData)data;
     if (pointerData.button == PointerEventData.InputButton.Right)
       OnItemRightClicked?.Invoke(this);
     else
       OnItemClicked?.Invoke(this);
+  }
+
+  public void OnDrop(PointerEventData eventData) {
+    OnItemDroppedOn.Invoke(this);
+  }
+
+  public void OnBeginDrag(PointerEventData eventData) {
+    if (hasItem)
+      OnItemDragStart?.Invoke(this);
+  }
+
+  public void OnEndDrag(PointerEventData eventData) {
+    OnItemDragEnd?.Invoke(this);
+  }
+
+  public void OnDrag(PointerEventData eventData) {
+    // IDragHandler is required for begin and end drag events.
+    // This method is intentionally left empty.
   }
 
 

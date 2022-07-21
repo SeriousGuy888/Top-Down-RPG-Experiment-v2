@@ -427,6 +427,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 2900727739370965922, guid: 91a05d4ee76f7284e8d8035968ca9057, type: 3}
   inventorySlotsContainer: {fileID: 8608996342025681678}
   descriptionPanel: {fileID: 3577440402523094930}
+  mouseFollower: {fileID: 0}
 --- !u!1 &8608996342997852143
 GameObject:
   m_ObjectHideFlags: 0
