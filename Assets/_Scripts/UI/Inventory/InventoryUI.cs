@@ -9,17 +9,28 @@ public class InventoryUI : MonoBehaviour {
   public InventorySlot slotPrefab;
 
   public Transform inventorySlotsContainer;
+  public InventoryDescription descriptionPanel;
+
   private InventorySlot[] inventorySlots;
 
-
-  private void Start() {
+  private void Awake() {
     Hide();
 
-    inventory.onItemChangedCallback += UpdateUI;
-    equipment.onItemChangedCallback += UpdateUI;
+    descriptionPanel.ResetDescription();
+
+    // inventory.onItemChangedCallback += UpdateUI;
+    // equipment.onItemChangedCallback += UpdateUI;
   }
 
-  public void Show() => gameObject.SetActive(true);
+  public void Show() {
+    gameObject.SetActive(true);
+    descriptionPanel.ResetDescription();
+
+    for(int i = 0; i < inventory.items.Count; i++) {
+      Item item = inventory.items[i];
+      inventorySlots[i].SetData(item.icon, 1);
+    }
+  }
   public void Hide() => gameObject.SetActive(false);
 
   public void InitInventoryUI(int inventorySize) {
