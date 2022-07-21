@@ -72,12 +72,18 @@ public class InventoryUI : MonoBehaviour {
       inventorySlots[index].SetData(icon, quantity);
     }
   }
+  public void UpdateDescription(Sprite icon, string title, string description) {
+    descriptionPanel.SetDescription(icon, title, description);
+  }
 
 
   private void HandleItemSelect(InventorySlot slot) {
     int index = Array.IndexOf(inventorySlots, slot);
     if (index == -1)
       return;
+
+    ResetSelection();
+    slot.Select();
 
     OnDescriptionRequested?.Invoke(index);
   }

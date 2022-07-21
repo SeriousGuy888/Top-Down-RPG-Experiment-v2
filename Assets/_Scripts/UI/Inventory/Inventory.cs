@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour {
     for (int i = 0; i < inventorySize; i++) {
       inventoryItems[i] = InventoryItem.GetEmptyItem();
     }
-    inventoryUI.InitInventoryUI(inventorySize);
+    PrepareUI();
 
     controls = GameManager.Instance.controls;
     controls.Player.ToggleInventory.performed += _ => {
@@ -35,6 +35,28 @@ public class Inventory : MonoBehaviour {
       }
     };
   }
+
+  private void PrepareUI() {
+    inventoryUI.InitInventoryUI(inventorySize);
+    inventoryUI.OnDescriptionRequested += HandleDescriptionRequest;
+    inventoryUI.OnSwapItems += HandleItemSwap;
+    inventoryUI.OnDragStart += HandleDrag;
+    inventoryUI.OnItemActionsRequested += HandleItemActionsRequest;
+  }
+
+  private void HandleDescriptionRequest(int index) {
+    var inventoryItem = inventoryItems[index];
+    if(inventoryItem.IsEmpty)
+      return;
+
+    var item = inventoryItem.item;
+    inventoryUI.UpdateDescription(item.icon, item.name, item.description);
+  }
+  private void HandleItemSwap(int indexA, int indexB) { }
+  private void HandleDrag(int index) { }
+  private void HandleItemActionsRequest(int index) { }
+
+
 
   public bool Add(Item item, int quantity) {
     for (int i = 0; i < inventoryItems.Length; i++) {
