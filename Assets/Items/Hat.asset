@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Hat
   m_EditorClassIdentifier: 
   name: Hat
+  description: fashionable
   icon: {fileID: -963174981, guid: db88fbe6bb24ee14baf632fbdb9f5781, type: 3}
+  isStackable: 0
+  maxStackSize: 1
   slot: 0
   defenceModifier: 2
   attackModifier: 0
