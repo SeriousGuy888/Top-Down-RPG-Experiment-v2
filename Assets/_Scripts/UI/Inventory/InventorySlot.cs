@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
 
   public Image itemImage; // The image component in which to display the icon
   public Image borderImage; // The image component that is visible when this slot is selected
+  public GameObject quantityTextBg; // The background image object for quantity text so that it is readable. 
   public TMP_Text quantityText; // The text component for stack number
 
   private bool hasItem = false;
@@ -29,6 +30,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
 
   public void ResetData() {
     itemImage.gameObject.SetActive(false);
+    quantityTextBg.SetActive(false);
     hasItem = false;
   }
 
@@ -37,6 +39,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
     itemImage.sprite = sprite;
     quantityText.text = quantity.ToString();
     hasItem = true;
+
+    if(quantity != 1) {
+      quantityTextBg.SetActive(true);
+    }
   }
 
   public void Deselect() {
