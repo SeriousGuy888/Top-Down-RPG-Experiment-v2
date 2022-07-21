@@ -39,7 +39,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
     hasItem = true;
   }
 
-  private void Deselect() {
+  public void Deselect() {
     borderImage.enabled = false;
   }
 
@@ -50,9 +50,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
 
 
   public void OnPointerClick(PointerEventData pointerData) {
-    if (!hasItem)
-      return;
-
     if (pointerData.button == PointerEventData.InputButton.Right)
       OnItemRightClicked?.Invoke(this);
     else
