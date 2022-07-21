@@ -26,8 +26,11 @@ public class InventoryUI : MonoBehaviour {
     gameObject.SetActive(true);
     descriptionPanel.ResetDescription();
 
-    for(int i = 0; i < inventory.items.Count; i++) {
+    for(int i = 0; i < inventory.items.Length; i++) {
       Item item = inventory.items[i];
+      if(item == null)
+        continue;
+        
       inventorySlots[i].SetData(item.icon, 1);
     }
   }

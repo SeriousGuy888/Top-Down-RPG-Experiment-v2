@@ -15,10 +15,11 @@ public class Inventory : MonoBehaviour {
 
   public InventoryUI inventoryUI;
   public int inventorySize = 12;
-  public List<Item> items = new();
+  public Item[] items;
   
 
   private void Start() {
+    items = new Item[inventorySize];
     inventoryUI.InitInventoryUI(inventorySize);
 
     controls = GameManager.Instance.controls;
@@ -32,19 +33,24 @@ public class Inventory : MonoBehaviour {
   }
 
   public bool Add(Item item) {
-    if (items.Count >= inventorySize) {
-      Debug.Log("not enough room");
-      return false;
+    for (int i = 0; i < items.Length; i++) {
+      if(items[i] == null) {
+        items[i] = item;
+
+        if (onItemChangedCallback != null)
+          onItemChangedCallback.Invoke();
+        return true;
+      }
+      continue;
     }
 
-    items.Add(item);
-    if (onItemChangedCallback != null)
-      onItemChangedCallback.Invoke();
-    return true;
+    Debug.Log("not enough room");
+    return false;
   }
 
-  public void Remove(Item item) {
-    items.Remove(item);
+  public void Remove(int slotIndex) {
+    items[slotIndex] = null;
+
     if (onItemChangedCallback != null)
       onItemChangedCallback.Invoke();
   }

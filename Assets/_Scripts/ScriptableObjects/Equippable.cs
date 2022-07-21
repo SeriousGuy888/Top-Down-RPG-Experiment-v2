@@ -11,17 +11,17 @@ public class Equippable : Item {
 
   private bool equipped = false;
 
-  public override void Use() {
-    base.Use();
-    if (equipped) {
-      Equipment.Instance.Unequip((int)this.slot);
-      equipped = false;
-    } else {
-      Equipment.Instance.Equip(this);
-      Inventory.Instance.Remove(this);
-      equipped = true;
-    }
-  }
+  // public override void Use() {
+  //   base.Use();
+  //   if (equipped) {
+  //     Equipment.Instance.Unequip((int)this.slot);
+  //     equipped = false;
+  //   } else {
+  //     Equipment.Instance.Equip(this);
+  //     Inventory.Instance.Remove(this);
+  //     equipped = true;
+  //   }
+  // }
 }
 
 public enum EquipmentSlot {
