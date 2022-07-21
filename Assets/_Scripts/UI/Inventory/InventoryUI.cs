@@ -37,12 +37,13 @@ public class InventoryUI : MonoBehaviour {
     gameObject.SetActive(true);
     ResetSelection();
 
-    for(int i = 0; i < inventory.items.Length; i++) {
-      Item item = inventory.items[i];
-      if(item == null)
-        continue;
-        
-      inventorySlots[i].SetData(item.icon, 1);
+    var inventoryState = inventory.GetInventoryState();
+    foreach(var entry in inventoryState) {
+      int slotIndex = entry.Key;
+      int quantity = entry.Value.quantity;
+      Item item = entry.Value.item;
+
+      inventorySlots[slotIndex].SetData(item.icon, quantity);
     }
   }
   public void Hide() {
@@ -67,7 +68,7 @@ public class InventoryUI : MonoBehaviour {
 
 
   public void UpdateSlotData(int index, Sprite icon, int quantity) {
-    if(inventorySlots.Length > index) {
+    if (inventorySlots.Length > index) {
       inventorySlots[index].SetData(icon, quantity);
     }
   }
@@ -87,7 +88,7 @@ public class InventoryUI : MonoBehaviour {
 
   private void HandleDragStart(InventorySlot slot) {
     int index = Array.IndexOf(inventorySlots, slot);
-    if(index == -1)
+    if (index == -1)
       return;
     currentDraggedItemIndex = index;
 

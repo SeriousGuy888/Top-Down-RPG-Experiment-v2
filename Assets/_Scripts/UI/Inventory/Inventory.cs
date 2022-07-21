@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,15 @@ public class Inventory : MonoBehaviour {
   public OnItemChanged onItemChangedCallback;
 
   public InventoryUI inventoryUI;
+
+  [SerializeField] private InventoryItem[] inventoryItems;
   public int inventorySize = 12;
-  public Item[] items;
-  
 
   private void Start() {
-    items = new Item[inventorySize];
+    inventoryItems = new InventoryItem[inventorySize];
+    for (int i = 0; i < inventorySize; i++) {
+      inventoryItems[i] = InventoryItem.GetEmptyItem();
+    }
     inventoryUI.InitInventoryUI(inventorySize);
 
     controls = GameManager.Instance.controls;
@@ -32,13 +36,15 @@ public class Inventory : MonoBehaviour {
     };
   }
 
-  public bool Add(Item item) {
-    for (int i = 0; i < items.Length; i++) {
-      if(items[i] == null) {
-        items[i] = item;
+  public bool Add(Item item, int quantity) {
+    for (int i = 0; i < inventoryItems.Length; i++) {
+      if (inventoryItems[i].IsEmpty) {
+        inventoryItems[i] = new InventoryItem {
+          item = item,
+          quantity = quantity,
+        };
 
-        if (onItemChangedCallback != null)
-          onItemChangedCallback.Invoke();
+        onItemChangedCallback?.Invoke();
         return true;
       }
       continue;
@@ -49,9 +55,38 @@ public class Inventory : MonoBehaviour {
   }
 
   public void Remove(int slotIndex) {
-    items[slotIndex] = null;
-
-    if (onItemChangedCallback != null)
-      onItemChangedCallback.Invoke();
+    inventoryItems[slotIndex] = InventoryItem.GetEmptyItem();
+    onItemChangedCallback?.Invoke();
   }
+
+  // Return a dictionary object where empty items are not added to the dictionary at all.
+  public Dictionary<int, InventoryItem> GetInventoryState() {
+    Dictionary<int, InventoryItem> dict = new();
+    for (int i = 0; i < inventoryItems.Length; i++) {
+      if (inventoryItems[i].IsEmpty)
+        continue;
+      dict[i] = inventoryItems[i];
+    }
+    return dict;
+  }
+}
+
+[Serializable]
+public struct InventoryItem {
+  public Item item;
+  public int quantity;
+
+  public bool IsEmpty => item == null;
+
+  public InventoryItem SetQuantity(int newQuantity) {
+    return new InventoryItem {
+      item = this.item,
+      quantity = newQuantity,
+    };
+  }
+
+  public static InventoryItem GetEmptyItem() => new InventoryItem {
+    item = null,
+    quantity = 0,
+  };
 }
