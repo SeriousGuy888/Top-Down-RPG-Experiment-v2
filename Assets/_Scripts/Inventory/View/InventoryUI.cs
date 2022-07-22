@@ -106,6 +106,7 @@ public class InventoryUI : MonoBehaviour {
       return;
 
     OnSwapItems?.Invoke(currentDraggedItemIndex, swappingIndex);
+    HandleItemSelect(slot); // select the new slot of the dragged item
   }
 
 
