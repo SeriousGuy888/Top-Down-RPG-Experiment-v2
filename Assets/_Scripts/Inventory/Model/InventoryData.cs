@@ -20,6 +20,10 @@ public class InventoryData : MonoBehaviour {
     // Loop through the inventory, looking for existing stacks of the same
     // item type. Add items to stacks to the max stack size, and then move on.
     for (int i = 0; i < inventoryItems.Length; i++) {
+      // Skip this loop entirely if the item is not stackable.
+      if(!newItem.isStackable)
+        break;
+
       var existingItemStack = inventoryItems[i];
 
       if(existingItemStack.IsEmpty)
@@ -51,7 +55,8 @@ public class InventoryData : MonoBehaviour {
     }
 
     // At this point, if not returned, there are still items left to distribute,
-    // and no stacks of that item that have space available.
+    // and no stacks of that item that have space available, or the incoming item
+    // is not stackable.
 
 
     for (int i = 0; i < inventoryItems.Length; i++) {
