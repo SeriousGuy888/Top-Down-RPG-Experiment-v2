@@ -99,19 +99,22 @@ public class InventoryUI : MonoBehaviour {
 
   private void HandleSwap(InventorySlot slot) {
     int swappingIndex = Array.IndexOf(inventorySlots, slot);
-    if (swappingIndex == -1)
+
+    // swappingIndex can be -1 if the slot dragged TO doesn't exist
+    // currentDraggedItemIndex can be -1 if the slot dragged FROM is empty
+    if (swappingIndex == -1 || currentDraggedItemIndex == -1)
       return;
 
     OnSwapItems?.Invoke(currentDraggedItemIndex, swappingIndex);
   }
 
 
-  private void CreateDraggedItem(Sprite sprite, int quantity) {
+  public void CreateDraggedItem(Sprite sprite, int quantity) {
     mouseFollower.Toggle(true);
     mouseFollower.SetData(sprite, quantity);
   }
 
-  private void ResetDraggedItem() {
+  public void ResetDraggedItem() {
     mouseFollower.Toggle(false);
     currentDraggedItemIndex = -1;
   }
@@ -123,21 +126,10 @@ public class InventoryUI : MonoBehaviour {
     }
   }
 
-
-  private void UpdateUI() {
-    // for (int i = 0; i < inventorySlots.Length; i++) {
-    //   if (i < inventory.items.Count)
-    //     inventorySlots[i].SetItem(inventory.items[i]);
-    //   else
-    //     inventorySlots[i].ClearSlot();
-    // }
-
-    // for (int i = 0; i < equipSlots.Length; i++) {
-    //   Item item = equipment.items[i];
-    //   if(item != null)
-    //     equipSlots[i].SetItem(item);
-    //   else
-    //     equipSlots[i].ClearSlot();
-    // }
+  public void ResetSlots() {
+    ResetSelection();
+    foreach (var slot in inventorySlots) {
+      slot.ResetData();
+    }
   }
 }

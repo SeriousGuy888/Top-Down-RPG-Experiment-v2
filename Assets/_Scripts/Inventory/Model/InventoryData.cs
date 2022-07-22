@@ -6,6 +6,9 @@ using UnityEngine;
 public class InventoryData : MonoBehaviour {
   [SerializeField] private InventoryItem[] inventoryItems;
 
+  public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdate;
+
+
   public void Init(int size) {
     inventoryItems = new InventoryItem[size];
     for (int i = 0; i < size; i++) {
@@ -50,6 +53,17 @@ public class InventoryData : MonoBehaviour {
       return inventoryItems[index];
     }
     return InventoryItem.GetEmptyItem();
+  }
+
+  public void SwapItems(int indexA, int indexB) {
+    var temp = inventoryItems[indexA];
+    inventoryItems[indexA] = inventoryItems[indexB];
+    inventoryItems[indexB] = temp;
+    AnnounceChange();
+  }
+
+  private void AnnounceChange() {
+    OnInventoryUpdate?.Invoke(GetInventoryState());
   }
 }
 
