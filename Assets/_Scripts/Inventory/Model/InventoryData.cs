@@ -16,17 +16,57 @@ public class InventoryData : MonoBehaviour {
     }
   }
 
-  public bool Add(Item item, int quantity) {
+  public bool Add(Item newItem, int quantity) {
+    // Loop through the inventory, looking for existing stacks of the same
+    // item type. Add items to stacks to the max stack size, and then move on.
     for (int i = 0; i < inventoryItems.Length; i++) {
-      if (inventoryItems[i].IsEmpty) {
-        inventoryItems[i] = new InventoryItem {
-          item = item,
-          quantity = quantity,
-        };
+      var existingItemStack = inventoryItems[i];
 
+      if(existingItemStack.IsEmpty)
+        continue;
+
+      // If stack is of a different item type to the incoming item
+      if (existingItemStack.item.ID != newItem.ID)
+        continue;
+
+      // If stack is already full.
+      if (existingItemStack.quantity >= newItem.maxStackSize)
+        continue;
+
+
+      int quantitySum = existingItemStack.quantity + quantity;
+      if (quantitySum > newItem.maxStackSize) {
+        // If there is not enough room in this stack
+
+        int spaceRemainingInStack = newItem.maxStackSize - existingItemStack.quantity;
+        inventoryItems[i] = existingItemStack.SetQuantity(newItem.maxStackSize);
+        quantity -= spaceRemainingInStack;
+      } else {
+        // If there is enough room in this stack for all the items, add it to the
+        // stack and return a success.
+
+        inventoryItems[i] = existingItemStack.SetQuantity(quantitySum);
         return true;
       }
-      continue;
+    }
+
+    // At this point, if not returned, there are still items left to distribute,
+    // and no stacks of that item that have space available.
+
+
+    for (int i = 0; i < inventoryItems.Length; i++) {
+      if (inventoryItems[i].IsEmpty) {
+        int newItemStackQuantity = Mathf.Min(quantity, newItem.maxStackSize);
+        quantity -= newItemStackQuantity;
+
+        inventoryItems[i] = new InventoryItem {
+          item = newItem,
+          quantity = newItemStackQuantity,
+        };
+
+        if(quantity == 0)
+          return true;
+      }
     }
 
     Debug.Log("not enough room");
@@ -49,7 +89,7 @@ public class InventoryData : MonoBehaviour {
   }
 
   public InventoryItem GetItem(int index) {
-    if(inventoryItems.Length > index) {
+    if (inventoryItems.Length > index) {
       return inventoryItems[index];
     }
     return InventoryItem.GetEmptyItem();
@@ -74,6 +114,12 @@ public struct InventoryItem {
 
   public bool IsEmpty => item == null;
 
+  /// <summary>
+  /// (!!!) This method does not modify the struct! 
+  /// </summary>
+  /// <returns>
+  /// A new instance of the struct with the modified quantity.
+  /// </returns>
   public InventoryItem SetQuantity(int newQuantity) {
     return new InventoryItem {
       item = this.item,
