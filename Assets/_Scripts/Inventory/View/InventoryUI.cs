@@ -36,15 +36,6 @@ public class InventoryUI : MonoBehaviour {
   public void Show() {
     gameObject.SetActive(true);
     ResetSelection();
-
-    var inventoryState = inventory.GetInventoryState();
-    foreach(var entry in inventoryState) {
-      int slotIndex = entry.Key;
-      int quantity = entry.Value.quantity;
-      Item item = entry.Value.item;
-
-      inventorySlots[slotIndex].SetData(item.icon, quantity);
-    }
   }
   public void Hide() {
     gameObject.SetActive(false);
@@ -67,12 +58,12 @@ public class InventoryUI : MonoBehaviour {
   }
 
 
-  public void UpdateSlotData(int index, Sprite icon, int quantity) {
+  public void SetSlotData(int index, Sprite icon, int quantity) {
     if (inventorySlots.Length > index) {
       inventorySlots[index].SetData(icon, quantity);
     }
   }
-  public void UpdateDescription(Sprite icon, string title, string description) {
+  public void SetDescription(Sprite icon, string title, string description) {
     descriptionPanel.SetDescription(icon, title, description);
   }
 

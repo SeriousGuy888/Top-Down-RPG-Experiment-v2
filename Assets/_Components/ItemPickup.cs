@@ -33,7 +33,7 @@ public class ItemPickup : MonoBehaviour {
 
   private void PickUp() {
     Debug.Log("Picking up " + item.name);
-    bool pickupSuccess = Inventory.Instance.Add(item, 1);
+    bool pickupSuccess = Inventory.Instance.inventoryData.Add(item, 1);
     if (pickupSuccess)
       Destroy(gameObject);
   }

@@ -28,7 +28,7 @@ public class Equipment : MonoBehaviour {
 
     // Return any item already in that slot to the inventory
     if (items[slotIndex] != null) {
-      Inventory.Instance.Add(items[slotIndex], 1);
+      Inventory.Instance.inventoryData.Add(items[slotIndex], 1);
     }
 
     items[slotIndex] = item;
@@ -39,7 +39,7 @@ public class Equipment : MonoBehaviour {
   public void Unequip(int slotIndex) {
     Equippable item = items[slotIndex];
     if (item != null) {
-      bool success = Inventory.Instance.Add(item, 1);
+      bool success = Inventory.Instance.inventoryData.Add(item, 1);
       if (success) {
         items[slotIndex] = null;
         if (onItemChangedCallback != null)
