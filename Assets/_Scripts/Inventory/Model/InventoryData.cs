@@ -50,6 +50,7 @@ public class InventoryData : MonoBehaviour {
         // stack and return a success.
 
         inventoryItems[i] = existingItemStack.SetQuantity(quantitySum);
+        AnnounceChange();
         return true;
       }
     }
@@ -69,11 +70,14 @@ public class InventoryData : MonoBehaviour {
           quantity = newItemStackQuantity,
         };
 
-        if(quantity == 0)
+        if(quantity == 0) {
+          AnnounceChange();
           return true;
+        }
       }
     }
 
+    AnnounceChange();
     Debug.Log("not enough room");
     return false;
   }
