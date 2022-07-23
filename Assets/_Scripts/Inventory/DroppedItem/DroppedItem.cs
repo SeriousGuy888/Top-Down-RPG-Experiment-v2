@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ItemPickup : MonoBehaviour {
+public class DroppedItem : MonoBehaviour {
   private Player player;
   private BoxCollider2D boxCollider;
 
