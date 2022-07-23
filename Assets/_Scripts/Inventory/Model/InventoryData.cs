@@ -80,7 +80,8 @@ public class InventoryData : MonoBehaviour {
         quantity = newItemStackQuantity,
       };
 
-      break;
+      if(quantity <= 0)
+        break;
     }
 
     AnnounceChange();
