@@ -16,17 +16,25 @@ public class InventoryData : MonoBehaviour {
     }
   }
 
-  public bool Add(Item newItem, int quantity) {
+  /// <summary>
+  ///   Adds an item to the inventory, allowing for a quantity to be specified. The
+  ///   item will be stacked to other items of the same type where possible.
+  /// </summary>
+  /// <returns>
+  ///   Quantity of items remaining after adding as much as possible to the inventory.
+  ///   Returns zero if all items were successfully added to the inventory.
+  /// </returns>
+  public int Add(Item newItem, int quantity) {
     // Loop through the inventory, looking for existing stacks of the same
     // item type. Add items to stacks to the max stack size, and then move on.
     for (int i = 0; i < inventoryItems.Length; i++) {
       // Skip this loop entirely if the item is not stackable.
-      if(!newItem.isStackable)
+      if (!newItem.isStackable)
         break;
 
       var existingItemStack = inventoryItems[i];
 
-      if(existingItemStack.IsEmpty)
+      if (existingItemStack.IsEmpty)
         continue;
 
       // If stack is of a different item type to the incoming item
@@ -51,7 +59,7 @@ public class InventoryData : MonoBehaviour {
 
         inventoryItems[i] = existingItemStack.SetQuantity(quantitySum);
         AnnounceChange();
-        return true;
+        return 0;
       }
     }
 
@@ -61,25 +69,22 @@ public class InventoryData : MonoBehaviour {
 
 
     for (int i = 0; i < inventoryItems.Length; i++) {
-      if (inventoryItems[i].IsEmpty) {
-        int newItemStackQuantity = Mathf.Min(quantity, newItem.maxStackSize);
-        quantity -= newItemStackQuantity;
+      if (!inventoryItems[i].IsEmpty)
+        continue;
+      
+      int newItemStackQuantity = Mathf.Min(quantity, newItem.maxStackSize);
+      quantity -= newItemStackQuantity;
 
-        inventoryItems[i] = new InventoryItem {
-          item = newItem,
-          quantity = newItemStackQuantity,
-        };
+      inventoryItems[i] = new InventoryItem {
+        item = newItem,
+        quantity = newItemStackQuantity,
+      };
 
-        if(quantity == 0) {
-          AnnounceChange();
-          return true;
-        }
-      }
+      break;
     }
 
     AnnounceChange();
-    Debug.Log("not enough room");
-    return false;
+    return quantity;
   }
 
   public void Remove(int slotIndex) {

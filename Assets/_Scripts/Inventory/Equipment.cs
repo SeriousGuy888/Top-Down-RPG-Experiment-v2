@@ -39,12 +39,9 @@ public class Equipment : MonoBehaviour {
   public void Unequip(int slotIndex) {
     Equippable item = items[slotIndex];
     if (item != null) {
-      bool success = Inventory.Instance.inventoryData.Add(item, 1);
-      if (success) {
+      int remainingQuantity = Inventory.Instance.inventoryData.Add(item, 1);
+      if (remainingQuantity == 0)
         items[slotIndex] = null;
-        if (onItemChangedCallback != null)
-          onItemChangedCallback.Invoke();
-      }
     }
   }
 }
