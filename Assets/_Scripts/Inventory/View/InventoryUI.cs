@@ -28,9 +28,6 @@ public class InventoryUI : MonoBehaviour {
     Hide();
     mouseFollower.Toggle(false);
     descriptionPanel.ResetDescription();
-
-    // inventory.onItemChangedCallback += UpdateUI;
-    // equipment.onItemChangedCallback += UpdateUI;
   }
 
   public void Show() {

@@ -8,9 +8,6 @@ public class Equipment : MonoBehaviour {
     Instance = this;
   }
 
-  public delegate void OnItemChanged();
-  public OnItemChanged onItemChangedCallback;
-
   public int slotCount;
   public Equippable[] items;
 
@@ -32,8 +29,8 @@ public class Equipment : MonoBehaviour {
     }
 
     items[slotIndex] = item;
-    if (onItemChangedCallback != null)
-      onItemChangedCallback.Invoke();
+    // if (onItemChangedCallback != null)
+    //   onItemChangedCallback.Invoke();
   }
 
   public void Unequip(int slotIndex) {
