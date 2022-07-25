@@ -19,7 +19,7 @@ public class Health : MonoBehaviour {
   private float hp;
   public float HP {
     set {
-      hp = value;
+      hp = Math.Min(value, maxHealth);
       OnHealthChange.Invoke(hp, maxHealth);
 
       if (hp <= 0) {
