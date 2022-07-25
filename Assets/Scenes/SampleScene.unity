@@ -10014,10 +10014,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6899434506150697923, guid: 0e0927d362f02bd43b34f8d4410a2d72, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9fed8fbbf0316814fb52ba8aa2399b4c, type: 3}
     - target: {fileID: 6899434506150697924, guid: 0e0927d362f02bd43b34f8d4410a2d72, type: 3}
       propertyPath: m_Name
       value: DroppedItem
       objectReference: {fileID: 0}
+    - target: {fileID: 6899434506150697925, guid: 0e0927d362f02bd43b34f8d4410a2d72, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 5dae60e7201753548a814084d244499d, type: 2}
     - target: {fileID: 6899434506150697925, guid: 0e0927d362f02bd43b34f8d4410a2d72, type: 3}
       propertyPath: quantity
       value: 25

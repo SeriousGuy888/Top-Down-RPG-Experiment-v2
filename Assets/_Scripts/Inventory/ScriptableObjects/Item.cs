@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject {
+public abstract class Item : ScriptableObject {
   new public string name = "New Item";
   [TextArea] public string description;
   public Sprite icon = null;
@@ -12,9 +11,4 @@ public class Item : ScriptableObject {
 
   public bool isStackable;
   public int maxStackSize = 1;
-
-
-  public virtual void Use() {
-    Debug.Log("Using item " + name);
-  }
 }
