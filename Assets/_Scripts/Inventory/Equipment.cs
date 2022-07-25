@@ -9,7 +9,7 @@ public class Equipment : MonoBehaviour {
   }
 
   public int slotCount;
-  public Equippable[] items;
+  public EquippableItem[] items;
 
   private void Start() {
     int actualSlotCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
@@ -17,10 +17,10 @@ public class Equipment : MonoBehaviour {
       Debug.LogWarning("Incorrect number of equipment slots!");
     slotCount = actualSlotCount;
 
-    items = new Equippable[slotCount];
+    items = new EquippableItem[slotCount];
   }
 
-  public void Equip(Equippable item) {
+  public void Equip(EquippableItem item) {
     int slotIndex = (int)item.slot;
 
     // Return any item already in that slot to the inventory
@@ -34,7 +34,7 @@ public class Equipment : MonoBehaviour {
   }
 
   public void Unequip(int slotIndex) {
-    Equippable item = items[slotIndex];
+    EquippableItem item = items[slotIndex];
     if (item != null) {
       int remainingQuantity = Inventory.Instance.inventoryData.Add(item, 1);
       if (remainingQuantity == 0)
