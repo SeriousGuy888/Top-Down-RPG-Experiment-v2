@@ -79,5 +79,18 @@ public class Inventory : MonoBehaviour {
     inventoryUI.CreateDraggedItem(inventoryItem.item.icon, inventoryItem.quantity);
   }
   
-  private void HandleItemActionsRequest(int index) { }
+  private void HandleItemActionsRequest(int index) {
+    var inventoryItem = inventoryData.GetItem(index);
+    if (inventoryItem.IsEmpty)
+      return;
+
+    var action = inventoryItem.item as IItemAction;
+    if(action != null)
+      action.Perform(GameManager.Instance.player.gameObject);
+
+    var destroyable = inventoryItem.item as IDestroyableItem;
+    Debug.Log(destroyable);
+    if(destroyable != null)
+      inventoryData.Remove(index, 1);
+  }
 }

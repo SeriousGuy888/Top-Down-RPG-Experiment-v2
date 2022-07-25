@@ -77,7 +77,10 @@ public class InventoryUI : MonoBehaviour {
   }
 
   private void HandleItemShowActions(InventorySlot slot) {
-
+    int index = Array.IndexOf(inventorySlots, slot);
+    if (index == -1)
+      return;
+    OnItemActionsRequested?.Invoke(index);
   }
 
   private void HandleDragStart(InventorySlot slot) {
