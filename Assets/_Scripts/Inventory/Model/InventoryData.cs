@@ -90,6 +90,7 @@ public class InventoryData : MonoBehaviour {
 
   public void Remove(int slotIndex) {
     inventoryItems[slotIndex] = InventoryItem.GetEmptyItem();
+    AnnounceChange();
   }
   public void Remove(int slotIndex, int removeQuantity) {
     var invItem = GetItem(slotIndex);
