@@ -91,6 +91,19 @@ public class InventoryData : MonoBehaviour {
   public void Remove(int slotIndex) {
     inventoryItems[slotIndex] = InventoryItem.GetEmptyItem();
   }
+  public void Remove(int slotIndex, int removeQuantity) {
+    var invItem = GetItem(slotIndex);
+    if(invItem.IsEmpty)
+      return;
+
+    int newQuantity = invItem.quantity - removeQuantity;
+    if(newQuantity <= 0) {
+      Remove(slotIndex);
+    } else {
+      inventoryItems[slotIndex] = invItem.SetQuantity(newQuantity);
+      AnnounceChange();
+    }
+  }
 
   // Return a dictionary object where empty items are not added to the dictionary at all.
   public Dictionary<int, InventoryItem> GetInventoryState() {
