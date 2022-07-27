@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public class InventoryData : MonoBehaviour {
   ///   Quantity of items remaining after adding as much as possible to the inventory.
   ///   Returns zero if all items were successfully added to the inventory.
   /// </returns>
-  public int Add(Item newItem, int quantity) {
+  public int Add(Item newItem, int quantity, List<ItemPropertyData> itemState = null) {
     // Loop through the inventory, looking for existing stacks of the same
     // item type. Add items to stacks to the max stack size, and then move on.
     for (int i = 0; i < inventoryItems.Length; i++) {
@@ -71,16 +72,17 @@ public class InventoryData : MonoBehaviour {
     for (int i = 0; i < inventoryItems.Length; i++) {
       if (!inventoryItems[i].IsEmpty)
         continue;
-      
+
       int newItemStackQuantity = Mathf.Min(quantity, newItem.maxStackSize);
       quantity -= newItemStackQuantity;
 
       inventoryItems[i] = new InventoryItem {
         item = newItem,
         quantity = newItemStackQuantity,
+        itemState = itemState ?? new(),
       };
 
-      if(quantity <= 0)
+      if (quantity <= 0)
         break;
     }
 
@@ -94,11 +96,11 @@ public class InventoryData : MonoBehaviour {
   }
   public void Remove(int slotIndex, int removeQuantity) {
     var invItem = GetItem(slotIndex);
-    if(invItem.IsEmpty)
+    if (invItem.IsEmpty)
       return;
 
     int newQuantity = invItem.quantity - removeQuantity;
-    if(newQuantity <= 0) {
+    if (newQuantity <= 0) {
       Remove(slotIndex);
     } else {
       inventoryItems[slotIndex] = invItem.SetQuantity(newQuantity);
@@ -140,6 +142,7 @@ public class InventoryData : MonoBehaviour {
 public struct InventoryItem {
   public Item item;
   public int quantity;
+  public List<ItemPropertyData> itemState;
 
   public bool IsEmpty => item == null;
 
@@ -153,11 +156,13 @@ public struct InventoryItem {
     return new InventoryItem {
       item = this.item,
       quantity = newQuantity,
+      itemState = new(),
     };
   }
 
   public static InventoryItem GetEmptyItem() => new InventoryItem {
     item = null,
     quantity = 0,
+    itemState = new(),
   };
 }

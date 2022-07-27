@@ -1,3 +1,4 @@
+using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,39 +59,55 @@ public class Inventory : MonoBehaviour {
   }
 
 
+  private string PrepareDescription(InventoryItem invItem) {
+    StringBuilder sb = new();
+    sb.Append(invItem.item.description);
+    sb.AppendLine();
+
+    for (int i = 0; i < invItem.itemState.Count; i++) {
+      var currProp = invItem.itemState[i];
+      sb.Append($"{currProp.property.Name}: {currProp.value}/{invItem.item.defaultPropertiesList[i].value}");
+      sb.AppendLine();
+    }
+
+    return sb.ToString();
+  }
+
   private void HandleDescriptionRequest(int index) {
-    var inventoryItem = inventoryData.GetItem(index);
-    if(inventoryItem.IsEmpty)
+    var invItem = inventoryData.GetItem(index);
+    if (invItem.IsEmpty)
       return;
 
-    var item = inventoryItem.item;
-    inventoryUI.SetDescription(item.icon, item.name, item.description);
+    var item = invItem.item;
+    var description = PrepareDescription(invItem);
+
+    inventoryUI.SetDescription(item.icon, item.name, description);
   }
-  
+
   private void HandleItemSwap(int indexA, int indexB) {
     inventoryData.SwapItems(indexA, indexB);
   }
 
   private void HandleDrag(int index) {
     var inventoryItem = inventoryData.GetItem(index);
-    if(inventoryItem.IsEmpty)
+    if (inventoryItem.IsEmpty)
       return;
 
     inventoryUI.CreateDraggedItem(inventoryItem.item.icon, inventoryItem.quantity);
   }
-  
+
   private void HandleItemActionsRequest(int index) {
     var inventoryItem = inventoryData.GetItem(index);
     if (inventoryItem.IsEmpty)
       return;
 
     var action = inventoryItem.item as IItemAction;
-    if(action != null)
-      action.Perform(GameManager.Instance.player.gameObject);
+    if (action != null)
+      action.Perform(GameManager.Instance.player.gameObject, null);
 
     var destroyable = inventoryItem.item as IDestroyableItem;
     Debug.Log(destroyable);
-    if(destroyable != null)
+    if (destroyable != null)
       inventoryData.Remove(index, 1);
   }
 }
