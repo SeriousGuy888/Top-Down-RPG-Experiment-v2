@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Edible", menuName = "Inventory/Edible")]
+[CreateAssetMenu(fileName = "New Edible Item", menuName = "Inventory/Item Types/Edible")]
 public class EdibleItem : Item, IDestroyableItem, IItemAction {
   [SerializeField] private List<ModifierData> modifiersData = new();
 

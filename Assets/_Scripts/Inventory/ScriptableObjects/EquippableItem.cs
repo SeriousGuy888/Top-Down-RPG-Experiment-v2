@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Equippable", menuName = "Inventory/Equippable")]
+[CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Item Types/Equippable")]
 public class EquippableItem : Item, IDestroyableItem, IItemAction {
   public EquipmentSlot slot;
 
