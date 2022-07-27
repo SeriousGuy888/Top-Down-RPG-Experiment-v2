@@ -34,7 +34,7 @@ public class DroppedItem : MonoBehaviour {
   }
 
   private void PickUp() {
-    int quantityRemaining = Inventory.Instance.inventoryData.Add(item, quantity);
+    int quantityRemaining = Inventory.Instance.inventoryData.Add(item, quantity, item.defaultPropertiesList);
     if(quantityRemaining == quantity) // if no items were picked up
       return;
     quantity = quantityRemaining;
