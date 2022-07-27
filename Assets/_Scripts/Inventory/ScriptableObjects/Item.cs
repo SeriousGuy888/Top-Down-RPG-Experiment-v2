@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Item : ScriptableObject {
@@ -11,4 +12,21 @@ public abstract class Item : ScriptableObject {
 
   public bool isStackable;
   public int maxStackSize = 1;
+}
+
+public interface IDestroyableItem {
+
+}
+
+public interface IItemAction {
+  public string Name { get; }
+  public AudioClip SFX { get; }
+
+  bool Perform(GameObject obj);
+}
+
+[Serializable]
+public class ModifierData {
+  public CharacterStatModifier statModifier;
+  public float value;
 }

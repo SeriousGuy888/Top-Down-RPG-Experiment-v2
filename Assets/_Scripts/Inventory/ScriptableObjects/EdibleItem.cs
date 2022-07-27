@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,21 +15,4 @@ public class EdibleItem : Item, IDestroyableItem, IItemAction {
     }
     return true;
   }
-}
-
-public interface IDestroyableItem {
-
-}
-
-public interface IItemAction {
-  public string Name { get; }
-  public AudioClip SFX { get; }
-
-  bool Perform(GameObject obj);
-}
-
-[Serializable]
-public class ModifierData {
-  public CharacterStatModifier statModifier;
-  public float value;
 }
