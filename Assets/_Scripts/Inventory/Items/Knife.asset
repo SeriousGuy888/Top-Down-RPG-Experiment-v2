@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd4891159b5fe5468826f55c1acaa51, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
-  name: New Item
-  description: 
-  icon: {fileID: 0}
+  name: Knife
+  description: hazardous
+  icon: {fileID: 21300000, guid: 9585ff6c71c7cb44991bdfefa7f127d8, type: 3}
   isStackable: 0
   maxStackSize: 1
-  defaultPropertiesList: []
-  slot: 0
+  defaultPropertiesList:
+  - property: {fileID: 11400000, guid: 775ab360be27dae4db5c9c45c3d3d425, type: 2}
+    value: 100
+  slot: 4
   defenceModifier: 0
-  attackModifier: 0
+  attackModifier: 6
