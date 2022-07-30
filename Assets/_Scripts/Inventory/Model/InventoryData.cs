@@ -25,7 +25,7 @@ public class InventoryData : MonoBehaviour {
   ///   Quantity of items remaining after adding as much as possible to the inventory.
   ///   Returns zero if all items were successfully added to the inventory.
   /// </returns>
-  public int Add(Item newItem, int quantity, List<ItemPropertyData> itemState = null) {
+  public int Add(Item newItem, int quantity, List<ItemProperty> itemState = null) {
     // Loop through the inventory, looking for existing stacks of the same
     // item type. Add items to stacks to the max stack size, and then move on.
     for (int i = 0; i < inventoryItems.Length; i++) {
@@ -142,7 +142,7 @@ public class InventoryData : MonoBehaviour {
 public struct InventoryItem {
   public Item item;
   public int quantity;
-  public List<ItemPropertyData> itemState;
+  public List<ItemProperty> itemState;
 
   public bool IsEmpty => item == null;
 

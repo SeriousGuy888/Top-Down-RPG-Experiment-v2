@@ -14,7 +14,7 @@ public class EquippableItem : Item, IDestroyableItem, IItemAction {
   public string Name => "Equip";
   public AudioClip SFX { get; private set; }
 
-  public bool Perform(GameObject obj, List<ItemPropertyData> itemState = null) {
+  public bool Perform(GameObject obj, List<ItemProperty> itemState = null) {
     throw new System.NotImplementedException();
   }
 }

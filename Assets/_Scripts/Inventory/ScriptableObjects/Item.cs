@@ -14,7 +14,7 @@ public abstract class Item : ScriptableObject {
   public bool isStackable;
   public int maxStackSize = 1;
 
-  public List<ItemPropertyData> defaultPropertiesList;
+  public List<ItemProperty> defaultPropertiesList;
 }
 
 public interface IDestroyableItem {
@@ -25,20 +25,11 @@ public interface IItemAction {
   public string Name { get; }
   public AudioClip SFX { get; }
 
-  bool Perform(GameObject obj, List<ItemPropertyData> itemState);
+  bool Perform(GameObject obj, List<ItemProperty> itemState);
 }
 
 [Serializable]
 public class ModifierData {
   public CharacterStatModifier statModifier;
   public float value;
-}
-
-[Serializable]
-public struct ItemPropertyData : IEquatable<ItemPropertyData> {
-  public ItemProperty property;
-  public float value;
-
-  public bool Equals(ItemPropertyData other) => 
-    other.property == property;
 }
