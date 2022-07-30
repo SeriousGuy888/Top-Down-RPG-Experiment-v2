@@ -79,7 +79,7 @@ public class InventoryData : MonoBehaviour {
       inventoryItems[i] = new InventoryItem {
         item = newItem,
         quantity = newItemStackQuantity,
-        itemState = itemState ?? new(),
+        properties = itemState ?? new(),
       };
 
       if (quantity <= 0)
@@ -142,7 +142,7 @@ public class InventoryData : MonoBehaviour {
 public struct InventoryItem {
   public Item item;
   public int quantity;
-  public List<ItemProperty> itemState;
+  public List<ItemProperty> properties;
 
   public bool IsEmpty => item == null;
 
@@ -156,13 +156,13 @@ public struct InventoryItem {
     return new InventoryItem {
       item = this.item,
       quantity = newQuantity,
-      itemState = new(),
+      properties = new(),
     };
   }
 
   public static InventoryItem GetEmptyItem() => new InventoryItem {
     item = null,
     quantity = 0,
-    itemState = new(),
+    properties = new(),
   };
 }

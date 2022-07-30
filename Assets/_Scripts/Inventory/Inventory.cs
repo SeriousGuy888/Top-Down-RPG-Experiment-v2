@@ -64,8 +64,8 @@ public class Inventory : MonoBehaviour {
     sb.Append(invItem.item.description);
     sb.AppendLine();
 
-    for (int i = 0; i < invItem.itemState.Count; i++) {
-      var currProp = invItem.itemState[i];
+    for (int i = 0; i < invItem.properties.Count; i++) {
+      var currProp = invItem.properties[i];
       sb.Append($"{currProp.property.Name}: {currProp.value}/{invItem.item.defaultPropertiesList[i].value}");
       sb.AppendLine();
     }
