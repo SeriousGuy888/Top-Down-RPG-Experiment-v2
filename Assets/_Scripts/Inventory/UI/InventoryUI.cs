@@ -44,6 +44,7 @@ public class InventoryUI : MonoBehaviour {
     for (int i = 0; i < inventorySize; i++) {
       var newSlot = Instantiate(slotPrefab, Vector3.zero, Quaternion.identity);
       newSlot.transform.SetParent(inventorySlotsContainer);
+      newSlot.transform.localScale = Vector3.one; // idk why its scaled weirdly so reset the scale
       inventorySlots[i] = newSlot;
 
       newSlot.OnItemClicked += HandleItemSelect;
