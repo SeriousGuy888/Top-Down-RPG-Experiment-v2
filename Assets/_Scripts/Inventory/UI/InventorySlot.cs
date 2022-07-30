@@ -23,7 +23,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
     OnItemDragEnd;
 
 
-  private void Start() {
+  private void Awake() {
     ResetData();
     Deselect();
   }

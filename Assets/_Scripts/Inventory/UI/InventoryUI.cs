@@ -64,6 +64,7 @@ public class InventoryUI : MonoBehaviour {
     for (int i = 0; i < equipmentSlots.Length; i++) {
       var slot = equipmentSlots[i];
       slot.defaultSprite = equipmentSlotSprites[i];
+      slot.ResetData(); // make sure it renders its default sprite
     }
 
     if(Application.isPlaying) {
