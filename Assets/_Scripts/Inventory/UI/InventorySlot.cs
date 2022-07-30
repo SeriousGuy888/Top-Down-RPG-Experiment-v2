@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// [ExecuteInEditMode]
+[ExecuteInEditMode]
 public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, IBeginDragHandler, IEndDragHandler, IDragHandler {
   public Sprite defaultSprite; // Sprite to display as icon when slot is empty
 
@@ -23,13 +23,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
     OnItemDragEnd;
 
 
-  private void Awake() {
+  private void Start() {
     ResetData();
     Deselect();
   }
 
+  private void Update() {
+    if (!Application.isPlaying)
+      ResetData();
+  }
+
   public void ResetData() {
-    itemImage.gameObject.SetActive(false);
+    if (defaultSprite != null) {
+      itemImage.gameObject.SetActive(true);
+      itemImage.sprite = defaultSprite;
+      itemImage.color = new Color(1, 1, 1, 0.5f);
+    } else {
+      itemImage.gameObject.SetActive(false);
+    }
     quantityTextBg.SetActive(false);
     hasItem = false;
   }
@@ -37,10 +48,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
   public void SetData(Sprite sprite, int quantity) {
     itemImage.gameObject.SetActive(true);
     itemImage.sprite = sprite;
+    itemImage.color = new Color(1, 1, 1, 1);
+
     quantityText.text = quantity.ToString();
     hasItem = true;
 
-    if(quantity != 1) {
+    if (quantity != 1) {
       quantityTextBg.SetActive(true);
     }
   }
