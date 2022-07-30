@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour {
   }
 
   private void PrepareUI() {
-    inventoryUI.InitInventoryUI(inventorySize);
+    inventoryUI.InitInventoryUI();
     inventoryUI.OnDescriptionRequested += HandleDescriptionRequest;
     inventoryUI.OnSwapItems += HandleItemSwap;
     inventoryUI.OnDragStart += HandleDrag;

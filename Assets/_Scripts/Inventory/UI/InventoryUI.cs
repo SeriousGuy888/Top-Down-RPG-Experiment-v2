@@ -3,17 +3,24 @@ using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class InventoryUI : MonoBehaviour {
+  [Header("Controller Scripts")]
   public Inventory inventory;
   public Equipment equipment;
 
-  public InventorySlot slotPrefab;
-
+  [Header("Objects")]
   public Transform inventorySlotsContainer;
-  public InventoryDescription descriptionPanel;
+  public Transform equipmentSlotsContainer;
   public MouseFollower mouseFollower;
+  public InventoryDescription descriptionPanel;
+
+  [Header("Prefabs & Sprites")]
+  public InventorySlot slotPrefab;
+  public Sprite[] equipmentSlotSprites;
 
   private InventorySlot[] inventorySlots;
+  private InventorySlot[] equipmentSlots;
   private int currentDraggedItemIndex = -1;
 
   public event Action<int>
@@ -25,9 +32,17 @@ public class InventoryUI : MonoBehaviour {
 
 
   private void Awake() {
+    if (!Application.isPlaying)
+      return;
+
     Hide();
     mouseFollower.Toggle(false);
     descriptionPanel.ResetDescription();
+  }
+
+  private void Update() {
+    if (!Application.isPlaying)
+      InitInventoryUI();
   }
 
   public void Show() {
@@ -39,22 +54,48 @@ public class InventoryUI : MonoBehaviour {
     ResetDraggedItem();
   }
 
-  public void InitInventoryUI(int inventorySize) {
-    inventorySlots = new InventorySlot[inventorySize];
-    for (int i = 0; i < inventorySize; i++) {
-      var newSlot = Instantiate(slotPrefab, Vector3.zero, Quaternion.identity);
-      newSlot.transform.SetParent(inventorySlotsContainer);
-      newSlot.transform.localScale = Vector3.one; // idk why its scaled weirdly so reset the scale
-      inventorySlots[i] = newSlot;
+  public void InitInventoryUI() {
+    inventorySlots = GenerateSlots(inventorySlotsContainer, inventory.inventorySize);
+    equipmentSlots = GenerateSlots(equipmentSlotsContainer, Enum.GetNames(typeof(EquipmentSlot)).Length);
 
-      newSlot.OnItemClicked += HandleItemSelect;
-      newSlot.OnItemRightClicked += HandleItemShowActions;
-      newSlot.OnItemDragStart += HandleDragStart;
-      newSlot.OnItemDragEnd += HandleDragEnd;
-      newSlot.OnItemDroppedOn += HandleSwap;
+    if (equipmentSlotSprites.Length != equipmentSlotsContainer.childCount)
+      Debug.LogWarning("Number of equipment slot sprites != number of equipment slots");
+
+    for (int i = 0; i < equipmentSlots.Length; i++) {
+      var slot = equipmentSlots[i];
+      slot.defaultSprite = equipmentSlotSprites[i];
+    }
+
+    if(Application.isPlaying) {
+      foreach (var slot in inventorySlots) {
+        slot.OnItemClicked += HandleItemSelect;
+        slot.OnItemRightClicked += HandleItemShowActions;
+        slot.OnItemDragStart += HandleDragStart;
+        slot.OnItemDragEnd += HandleDragEnd;
+        slot.OnItemDroppedOn += HandleSwap;
+      }
     }
   }
 
+  private InventorySlot[] GenerateSlots(Transform container, int neededSlots) {
+    neededSlots = Math.Max(neededSlots, 0);
+    int existingSlots = container.childCount;
+
+    if (existingSlots < neededSlots) {
+      for (int i = 0; i < neededSlots - existingSlots; i++)
+        PrefabUtility.InstantiatePrefab(slotPrefab, container);
+    }
+    while (existingSlots > neededSlots) {
+      DestroyImmediate(container.GetChild(neededSlots).gameObject);
+      existingSlots--;
+    }
+
+    var slots = new InventorySlot[neededSlots];
+    for (int i = 0; i < neededSlots; i++)
+      slots[i] = container.GetChild(i).GetComponent<InventorySlot>();
+    return slots;
+  }
+  
 
   public void SetSlotData(int index, Sprite icon, int quantity) {
     if (inventorySlots.Length > index) {

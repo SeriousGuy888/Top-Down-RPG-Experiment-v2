@@ -9,7 +9,7 @@ public class EquippableItem : Item, IDestroyableItem, IItemAction {
   public int defenceModifier;
   public int attackModifier;
 
-  private bool equipped = false;
+  // private bool equipped = false;
 
   public string Name => "Equip";
   public AudioClip SFX { get; private set; }
