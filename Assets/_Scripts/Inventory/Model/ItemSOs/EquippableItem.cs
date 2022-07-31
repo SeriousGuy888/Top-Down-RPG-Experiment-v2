@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Item Types/Equippable")]
 public class EquippableItem : Item, IDestroyableItem, IItemAction {
-  public EquipmentSlot slot;
+  public AssignedEquipmentSlot slot;
 
   public int defenceModifier;
   public int attackModifier;
@@ -19,7 +19,7 @@ public class EquippableItem : Item, IDestroyableItem, IItemAction {
   }
 }
 
-public enum EquipmentSlot {
+public enum AssignedEquipmentSlot {
   Head,
   Chest,
   Legs,

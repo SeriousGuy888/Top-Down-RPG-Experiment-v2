@@ -1,6 +1,7 @@
 using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Inventory : MonoBehaviour {
   public static Inventory Instance;
@@ -13,7 +14,13 @@ public class Inventory : MonoBehaviour {
   public InventoryData inventoryData; // model
   public InventoryUI inventoryUI; // view
 
-  public int inventorySize = 12;
+  // Which slot indexes are reserved for equipment, and what type of
+  // equipment can go in each slot. Set by UI script while UI is prepared.
+  public Dictionary<int, AssignedEquipmentSlot> reservedEquipmentSlots;
+
+
+  public int mainSlotCount = 12;
+  [HideInInspector] public int equipmentSlotCount = Enum.GetNames(typeof(AssignedEquipmentSlot)).Length;
 
   private void Start() {
     PrepareData();
@@ -39,7 +46,7 @@ public class Inventory : MonoBehaviour {
   }
 
   private void PrepareData() {
-    inventoryData.Init(inventorySize);
+    inventoryData.Init(mainSlotCount + equipmentSlotCount);
     inventoryData.OnInventoryUpdate += UpdateUI;
   }
 

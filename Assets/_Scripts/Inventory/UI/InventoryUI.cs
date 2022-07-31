@@ -20,7 +20,6 @@ public class InventoryUI : MonoBehaviour {
   public Sprite[] equipmentSlotSprites;
 
   private InventorySlot[] inventorySlots;
-  private InventorySlot[] equipmentSlots;
   private int currentDraggedItemIndex = -1;
 
   public event Action<int>
@@ -55,19 +54,30 @@ public class InventoryUI : MonoBehaviour {
   }
 
   public void InitInventoryUI() {
-    inventorySlots = GenerateSlots(inventorySlotsContainer, inventory.inventorySize);
-    equipmentSlots = GenerateSlots(equipmentSlotsContainer, Enum.GetNames(typeof(EquipmentSlot)).Length);
+    inventorySlots = new InventorySlot[inventory.mainSlotCount + inventory.equipmentSlotCount];
+
+    var mainSlots = GenerateSlots(inventorySlotsContainer, inventory.mainSlotCount);
+    var equipmentSlots = GenerateSlots(equipmentSlotsContainer, inventory.equipmentSlotCount);
+
+    for (int i = 0; i < mainSlots.Length; i++) {
+      inventorySlots[i] = mainSlots[i];
+    }
+
+    inventory.reservedEquipmentSlots = new();
+    for (int i = 0; i < equipmentSlots.Length; i++) {
+      inventorySlots[inventory.mainSlotCount + i] = equipmentSlots[i];
+      inventory.reservedEquipmentSlots[i] = (AssignedEquipmentSlot)i;
+
+      var slot = equipmentSlots[i];
+      slot.defaultSprite = equipmentSlotSprites[i]; // set default sprite to appropriate equipment icon
+      slot.ResetData(); // make sure it renders its default sprite
+    }
 
     if (equipmentSlotSprites.Length != equipmentSlotsContainer.childCount)
       Debug.LogWarning("Number of equipment slot sprites != number of equipment slots");
 
-    for (int i = 0; i < equipmentSlots.Length; i++) {
-      var slot = equipmentSlots[i];
-      slot.defaultSprite = equipmentSlotSprites[i];
-      slot.ResetData(); // make sure it renders its default sprite
-    }
 
-    if(Application.isPlaying) {
+    if (Application.isPlaying) {
       foreach (var slot in inventorySlots) {
         slot.OnItemClicked += HandleItemSelect;
         slot.OnItemRightClicked += HandleItemShowActions;
@@ -96,7 +106,7 @@ public class InventoryUI : MonoBehaviour {
       slots[i] = container.GetChild(i).GetComponent<InventorySlot>();
     return slots;
   }
-  
+
 
   public void SetSlotData(int index, Sprite icon, int quantity) {
     if (inventorySlots.Length > index) {

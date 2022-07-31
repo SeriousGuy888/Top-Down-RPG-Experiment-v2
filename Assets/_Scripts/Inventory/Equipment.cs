@@ -12,7 +12,7 @@ public class Equipment : MonoBehaviour {
   public EquippableItem[] items;
 
   private void Start() {
-    int actualSlotCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+    int actualSlotCount = System.Enum.GetNames(typeof(AssignedEquipmentSlot)).Length;
     if (actualSlotCount != slotCount)
       Debug.LogWarning("Incorrect number of equipment slots!");
     slotCount = actualSlotCount;
