@@ -14,7 +14,31 @@ public abstract class Item : ScriptableObject {
   public bool isStackable;
   public int maxStackSize = 1;
 
+  // The default properties (eg. durability) for this item
   public List<ItemProperty> defaultPropertiesList;
+
+  // What types of slots this item can be put in
+  public List<ItemAssignedSlot> itemAllowedSlots;
+
+  public bool IsValidSlot(List<ItemAssignedSlot> slotAccepts) {
+    if(slotAccepts == null)
+      return true;
+
+    foreach(var loopSlotType in itemAllowedSlots) {
+      if(slotAccepts.Contains(loopSlotType))
+        return true;
+    }
+    return false;
+  }
+}
+
+public enum ItemAssignedSlot {
+  Head,
+  Chest,
+  Legs,
+  Feet,
+  Offhand,
+  Mainhand,
 }
 
 public interface IDestroyableItem {

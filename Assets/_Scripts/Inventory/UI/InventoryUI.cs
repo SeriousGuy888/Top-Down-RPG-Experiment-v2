@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
@@ -63,14 +64,16 @@ public class InventoryUI : MonoBehaviour {
       inventorySlots[i] = mainSlots[i];
     }
 
-    inventory.reservedEquipmentSlots = new();
     for (int i = 0; i < equipmentSlots.Length; i++) {
-      inventorySlots[inventory.mainSlotCount + i] = equipmentSlots[i];
-      inventory.reservedEquipmentSlots[i] = (AssignedEquipmentSlot)i;
-
       var slot = equipmentSlots[i];
       slot.defaultSprite = equipmentSlotSprites[i]; // set default sprite to appropriate equipment icon
       slot.ResetData(); // make sure it renders its default sprite
+
+      if (Application.isPlaying) {
+        inventorySlots[inventory.mainSlotCount + i] = equipmentSlots[i];
+        inventory.slotsAccept[inventory.mainSlotCount + i] = new List<ItemAssignedSlot>() { (ItemAssignedSlot)i };
+        // todo: make which slot type is assigned be set in the inspector
+      }
     }
 
     if (equipmentSlotSprites.Length != equipmentSlotsContainer.childCount)

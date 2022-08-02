@@ -14,13 +14,13 @@ public class Inventory : MonoBehaviour {
   public InventoryData inventoryData; // model
   public InventoryUI inventoryUI; // view
 
-  // Which slot indexes are reserved for equipment, and what type of
-  // equipment can go in each slot. Set by UI script while UI is prepared.
-  public Dictionary<int, AssignedEquipmentSlot> reservedEquipmentSlots;
+  public List<ItemAssignedSlot>[] slotsAccept;
+
+
 
 
   public int mainSlotCount = 12;
-  [HideInInspector] public int equipmentSlotCount = Enum.GetNames(typeof(AssignedEquipmentSlot)).Length;
+  public int equipmentSlotCount = 6;
 
   private void Start() {
     PrepareData();
@@ -46,7 +46,10 @@ public class Inventory : MonoBehaviour {
   }
 
   private void PrepareData() {
-    inventoryData.Init(mainSlotCount + equipmentSlotCount);
+    int totalSlotCount = mainSlotCount + equipmentSlotCount;
+    slotsAccept = new List<ItemAssignedSlot>[totalSlotCount];
+
+    inventoryData.Init(totalSlotCount);
     inventoryData.OnInventoryUpdate += UpdateUI;
   }
 
@@ -92,6 +95,17 @@ public class Inventory : MonoBehaviour {
   }
 
   private void HandleItemSwap(int indexA, int indexB) {
+    var itemA = inventoryData.GetItem(indexA).item;
+    var itemB = inventoryData.GetItem(indexB).item;
+
+    var slotAAccepts = slotsAccept[indexA];
+    var slotBAccepts = slotsAccept[indexB];
+
+    if (itemA != null && !itemA.IsValidSlot(slotBAccepts))
+      return;
+    if (itemB != null && !itemB.IsValidSlot(slotAAccepts))
+      return;
+
     inventoryData.SwapItems(indexA, indexB);
   }
 

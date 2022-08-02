@@ -4,12 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Equippable Item", menuName = "Inventory/Item Types/Equippable")]
 public class EquippableItem : Item, IDestroyableItem, IItemAction {
-  public AssignedEquipmentSlot slot;
-
   public int defenceModifier;
   public int attackModifier;
-
-  // private bool equipped = false;
 
   public string Name => "Equip";
   public AudioClip SFX { get; private set; }
@@ -17,13 +13,4 @@ public class EquippableItem : Item, IDestroyableItem, IItemAction {
   public bool Perform(GameObject obj, List<ItemProperty> itemState = null) {
     throw new System.NotImplementedException();
   }
-}
-
-public enum AssignedEquipmentSlot {
-  Head,
-  Chest,
-  Legs,
-  Feet,
-  Mainhand,
-  Offhand,
 }
