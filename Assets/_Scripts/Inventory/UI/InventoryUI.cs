@@ -8,7 +8,6 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour {
   [Header("Controller Scripts")]
   public Inventory inventory;
-  public Equipment equipment;
 
   [Header("Objects")]
   public Transform inventorySlotsContainer;

@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 public class Player : Creature {
   public SwordAttack swordAttack;
   public Inventory inventory;
-  public Equipment equipment;
 
   private InputMaster controls;
 

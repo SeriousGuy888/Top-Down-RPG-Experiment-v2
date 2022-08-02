@@ -92,45 +92,4 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IDropHandler, 
     // IDragHandler is required for begin and end drag events.
     // This method is intentionally left empty.
   }
-
-
-
-  // private void Update() {
-  //   if (Application.isPlaying)
-  //     return;
-
-  //   if (item == null)
-  //     SetEmptyIcon();
-  // }
-
-  // public void SetItem(Item newItem) {
-  //   item = newItem;
-
-  //   itemImage.sprite = item.icon;
-  //   itemImage.color = new Color(1, 1, 1, 1);
-  //   itemImage.enabled = true;
-  // }
-
-  // public void ClearSlot() {
-  //   item = null;
-  //   SetEmptyIcon();
-  // }
-
-  // private void SetEmptyIcon() {
-  //   if (defaultSprite != null) {
-  //     itemImage.sprite = defaultSprite;
-  //     itemImage.color = new Color(1, 1, 1, 0.5f);
-  //     itemImage.enabled = true;
-  //   } else {
-  //     itemImage.sprite = null;
-  //     itemImage.enabled = false;
-  //   }
-  // }
-
-  // public void UseItem() {
-  //   if (item == null)
-  //     return;
-
-  //   item.Use();
-  // }
 }
