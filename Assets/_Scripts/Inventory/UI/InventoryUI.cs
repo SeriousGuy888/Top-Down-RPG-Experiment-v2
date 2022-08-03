@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using UnityEditor;
 using UnityEngine;
@@ -119,6 +120,12 @@ public class InventoryUI : MonoBehaviour {
     descriptionPanel.SetDescription(icon, title, description);
   }
 
+  public void SelectSlot(int slotIndex) {
+    if(inventorySlots.ElementAtOrDefault(slotIndex) == null)
+      return;
+    HandleItemSelect(inventorySlots[slotIndex]);
+  }
+
 
   private void HandleItemSelect(InventorySlot slot) {
     int index = Array.IndexOf(inventorySlots, slot);
@@ -161,7 +168,6 @@ public class InventoryUI : MonoBehaviour {
       return;
 
     OnSwapItems?.Invoke(currentDraggedItemIndex, swappingIndex);
-    HandleItemSelect(slot); // select the new slot of the dragged item
   }
 
 

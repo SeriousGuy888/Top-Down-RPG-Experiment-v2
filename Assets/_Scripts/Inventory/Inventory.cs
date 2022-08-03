@@ -107,6 +107,7 @@ public class Inventory : MonoBehaviour {
       return;
 
     inventoryData.SwapItems(indexA, indexB);
+    inventoryUI.SelectSlot(indexB);
   }
 
   private void HandleDrag(int index) {
