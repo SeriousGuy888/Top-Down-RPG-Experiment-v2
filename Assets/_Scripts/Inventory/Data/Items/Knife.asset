@@ -20,6 +20,6 @@ MonoBehaviour:
   defaultPropertiesList:
   - property: {fileID: 11400000, guid: 775ab360be27dae4db5c9c45c3d3d425, type: 2}
     value: 100
-  slot: 4
+  itemAllowedSlots: 05000000
   defenceModifier: 0
   attackModifier: 6
