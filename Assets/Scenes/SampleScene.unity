@@ -2677,7 +2677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3348c7afde1dd88428b8b4cafb88d34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outputTilemap: {fileID: 1920527934}
+  walkableTilemap: {fileID: 1920527934}
+  obstacleTilemap: {fileID: 1142085084}
 --- !u!114 &1331849212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2701,12 +2702,16 @@ MonoBehaviour:
   offset: {x: 0.25, y: 0}
   regions:
   - height: 0.25
+    isWalkable: 0
     tile: {fileID: 11400000, guid: 720992268e20e9248848284fa0ec6a48, type: 2}
   - height: 0.375
+    isWalkable: 0
     tile: {fileID: 11400000, guid: 9475b1f5df1c61d40a08c2e84c1b4f0b, type: 2}
   - height: 0.5
+    isWalkable: 1
     tile: {fileID: 11400000, guid: 03999258d6e0d2146b0ad47e016abfa5, type: 2}
   - height: 1
+    isWalkable: 1
     tile: {fileID: 11400000, guid: f43aaabc557a51a4580fef7761c70339, type: 2}
 --- !u!4 &1331849213
 Transform:

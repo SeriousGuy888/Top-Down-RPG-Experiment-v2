@@ -58,6 +58,7 @@ namespace WorldGeneration {
   [System.Serializable]
   public struct TerrainType {
     public float height;
+    public bool isWalkable;
     public TileBase tile;
   }
 }
