@@ -59,6 +59,8 @@ public class Inventory : MonoBehaviour {
     inventoryUI.OnSwapItems += HandleItemSwap;
     inventoryUI.OnDragStart += HandleDrag;
     inventoryUI.OnItemActionsRequested += HandleItemActionsRequest;
+
+    inventoryUI.Hide();
   }
 
   private void UpdateUI(Dictionary<int, InventoryItem> inventoryState) {
