@@ -8,8 +8,11 @@ namespace WorldGeneration {
 
     public Tilemap walkableTilemap;
     public Tilemap obstacleTilemap;
+    public Tilemap buildingTilemap;
 
-    public void Build(int[] tileIndexMap, int width, int height, TerrainType[] regions) {
+    public TileBase cityTile;
+
+    public void Build(int[] tileIndexMap, int width, int height, TerrainType[] regions, List<int> cityIndices) {
 
       var positions = new Vector3Int[width * height];
       var walkableTiles = new TileBase[positions.Length];
@@ -23,6 +26,10 @@ namespace WorldGeneration {
         if (terrainType.isWalkable) {
           walkableTiles[i] = terrainType.tile;
           obstacleTiles[i] = null;
+
+          if (cityIndices.Contains(i)) {
+            buildingTilemap.SetTile(positions[i], cityTile);
+          }
         } else {
           walkableTiles[i] = null;
           obstacleTiles[i] = terrainType.tile;

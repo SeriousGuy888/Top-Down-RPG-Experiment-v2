@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using WorldGeneration;
 
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour {
   public bool isPointerOverUI;
 
   public MapGenerator mapGenerator;
+  public NavMeshSurface navMeshSurface;
 
   private void Awake() {
     Instance = this;
@@ -22,6 +24,10 @@ public class GameManager : MonoBehaviour {
     controls.Enable();
 
     mapGenerator.GenerateMap();
+  }
+
+  private void Start() {
+    navMeshSurface.BuildNavMeshAsync();
   }
 
   private void Update() {

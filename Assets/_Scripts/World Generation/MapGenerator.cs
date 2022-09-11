@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,21 @@ namespace WorldGeneration {
 
     public MapBuilder builder;
 
+    [Header("Terrain Noise Settings")]
     public int width;
     public int height;
     public float noiseScale;
+    public int seed;
+    public Vector2 offset;
 
     public int octaves;
     [Range(0, 1)] public float persistance;
     public float lacunarity;
 
-    public int seed;
-    public Vector2 offset;
-
     public TerrainType[] regions;
+
+    [Header("City Placement Settings")]
+    public int cityZoneDim;
 
 
     public void GenerateMap() {
@@ -40,7 +44,29 @@ namespace WorldGeneration {
         }
       }
 
-      builder.Build(tileIndexMap, width, height, regions);
+      // Cut up the world into square zones and choose a random position in each zone to spawn a city.
+      List<int> citySpawnIndices = new();
+      int cityZoneCountX = Mathf.CeilToInt((float)width / cityZoneDim);
+      int cityZoneCountY = Mathf.CeilToInt((float)height / cityZoneDim);
+      int citySpawnAttempts = cityZoneCountX * cityZoneCountY;
+      Debug.Log(citySpawnAttempts);
+
+      UnityEngine.Random.InitState(seed);
+      for (int zoneY = 0; zoneY < cityZoneCountY; zoneY++) {
+        for (int zoneX = 0; zoneX < cityZoneCountX; zoneX++) {
+          int minX = zoneX * cityZoneDim;
+          int maxX = minX + cityZoneDim;
+          int minY = zoneY * cityZoneDim;
+          int maxY = minY + cityZoneDim;
+
+          int x = UnityEngine.Random.Range(minX, maxX);
+          int y = UnityEngine.Random.Range(minY, maxY);
+
+          citySpawnIndices.Add(y * width + x);
+        }
+      }
+
+      builder.Build(tileIndexMap, width, height, regions, citySpawnIndices);
     }
 
     private void OnValidate() {
