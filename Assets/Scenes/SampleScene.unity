@@ -2719,11 +2719,11 @@ MonoBehaviour:
   width: 100
   height: 100
   noiseScale: 75
+  seed: 5
+  offset: {x: 0.25, y: 0}
   octaves: 4
   persistance: 0.4
   lacunarity: 3
-  seed: 5
-  offset: {x: 0.25, y: 0}
   regions:
   - height: 0.25
     isWalkable: 0
@@ -2737,6 +2737,7 @@ MonoBehaviour:
   - height: 1
     isWalkable: 1
     tile: {fileID: 11400000, guid: f43aaabc557a51a4580fef7761c70339, type: 2}
+  cityZoneDim: 25
 --- !u!4 &1331849213
 Transform:
   m_ObjectHideFlags: 0
