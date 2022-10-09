@@ -8,9 +8,6 @@ namespace WorldGeneration {
 
     public Tilemap walkableTilemap;
     public Tilemap obstacleTilemap;
-    public Tilemap buildingTilemap;
-
-    public City cityPrefab;
 
     public void Build(int[] tileIndexMap, int width, int height, TerrainType[] regions, List<int> cityIndices) {
 
@@ -28,8 +25,7 @@ namespace WorldGeneration {
           obstacleTiles[i] = null;
 
           if (cityIndices.Contains(i)) {
-            City city = Instantiate(cityPrefab, walkableTilemap.GetCellCenterWorld(positions[i]), Quaternion.identity);
-            city.Init((Vector2Int)positions[i]);
+            WorldManager.Instance.SpawnCity((Vector2Int)positions[i]);
           }
         } else {
           walkableTiles[i] = null;
